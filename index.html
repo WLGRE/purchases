@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business Purchase Log</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f7f6f3; --surface: #ffffff; --surface2: #f0ede8;
+    --border: #e2ddd8; --border2: #ccc8c2;
+    --text: #1a1916; --text2: #6b6760; --text3: #9e9b96;
+    --accent: #2a5c45; --accent-light: #e8f2ed; --accent-text: #1d3f30;
+    --danger: #c0392b; --danger-light: #fdf0ee;
+    --radius: 10px; --radius-sm: 6px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
+  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
+
+  #lock-screen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+  .lock-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 2.5rem 2rem; width: 100%; max-width: 380px; box-shadow: var(--shadow-md); text-align: center; }
+  .lock-logo { width: 52px; height: 52px; background: var(--accent); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
+  .lock-logo svg { width: 26px; height: 26px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .lock-card h2 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  .lock-card > p { font-size: 13px; color: var(--text2); margin-bottom: 1.5rem; }
+  .lock-input-wrap { position: relative; margin-bottom: 12px; }
+  .lock-input-wrap input { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 15px; padding: 11px 44px 11px 14px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); outline: none; transition: border-color 0.15s, box-shadow 0.15s; letter-spacing: 0.08em; }
+  .lock-input-wrap input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(42,92,69,0.12); }
+  .toggle-pw { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--text2); padding: 4px; }
+  .toggle-pw svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; display: block; }
+  .lock-err { font-size: 12px; color: var(--danger); margin-bottom: 10px; display: none; }
+  .lock-btn { width: 100%; padding: 11px; background: var(--accent); color: #fff; border: none; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; transition: background 0.15s; }
+  .lock-btn:hover { background: var(--accent-text); }
+  .lock-hint { font-size: 11px; color: var(--text3); margin-top: 14px; line-height: 1.6; }
+  .lock-hint strong { color: var(--text2); }
+
+  #app { display: none; }
+
+  header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); flex-wrap: wrap; }
+  .logo-mark { width: 36px; height: 36px; background: var(--accent); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .logo-mark svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .header-titles h1 { font-size: 17px; font-weight: 600; }
+  .header-titles p { font-size: 13px; color: var(--text2); margin-top: 1px; }
+  .header-right { margin-left: auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+  .gdrive-status { display: flex; align-items: center; gap: 7px; font-size: 13px; }
+  .gdrive-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border2); flex-shrink: 0; transition: background 0.3s; }
+  .gdrive-dot.connected { background: #34a853; }
+  .gdrive-dot.syncing { background: #fbbc04; animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.35} }
+  #gdrive-status-text { color: var(--text2); font-size: 12px; }
+
+  #gdrive-open-btn { display: none; }
+  #gdrive-open-btn.visible { display: inline-flex; }
+
+  /* Google Sheets button */
+  .btn-sheets { background: #e8f5e9; color: #1b5e20; border-color: #a5d6a7; }
+  .btn-sheets:hover { background: #d0edda; }
+
+  .main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 2rem; }
+  .metric { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.25rem; box-shadow: var(--shadow); }
+  .metric-label { font-size: 12px; font-weight: 500; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
+  .metric-value { font-size: 26px; font-weight: 600; color: var(--text); font-family: 'DM Mono', monospace; }
+  .metric.accent { background: var(--accent); border-color: var(--accent); }
+  .metric.accent .metric-label { color: rgba(255,255,255,0.7); }
+  .metric.accent .metric-value { color: #fff; }
+  .section-title { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text2); margin-bottom: 12px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.5rem; margin-bottom: 1.5rem; }
+
+  .gdrive-panel { background: var(--accent-light); border: 1px solid #b2d8c4; border-radius: var(--radius); padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: none; }
+  .gdrive-panel.visible { display: block; }
+  .gdrive-panel-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .gdrive-panel-row p { font-size: 13px; color: var(--accent-text); flex: 1; min-width: 160px; }
+
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field.span2 { grid-column: span 2; }
+  .field.span3 { grid-column: span 3; }
+  label { font-size: 12px; font-weight: 600; color: var(--text2); letter-spacing: 0.03em; }
+  input[type=text], input[type=number], input[type=date], select, textarea { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 14px; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); transition: border-color 0.15s, box-shadow 0.15s; outline: none; appearance: none; -webkit-appearance: none; }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(42,92,69,0.12); }
+  textarea { resize: vertical; min-height: 72px; line-height: 1.5; }
+  select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b6760' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
+
+  .combo-wrap { position: relative; }
+  .combo-wrap input { padding-right: 32px; }
+  .combo-arrow { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text2); }
+  .combo-arrow svg { width: 12px; height: 12px; fill: var(--text2); display: block; }
+  .combo-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; background: var(--surface); border: 1px solid var(--border2); border-radius: var(--radius-sm); box-shadow: var(--shadow-md); z-index: 200; max-height: 220px; overflow-y: auto; display: none; }
+  .combo-dropdown.open { display: block; }
+  .combo-item { padding: 9px 12px; font-size: 13.5px; cursor: pointer; color: var(--text); }
+  .combo-item:hover, .combo-item.active { background: var(--accent-light); color: var(--accent-text); }
+  .combo-item.add-new { color: var(--accent); font-weight: 500; border-top: 1px solid var(--border); }
+  .combo-item.add-new:hover { background: var(--accent-light); }
+  .combo-empty { padding: 9px 12px; font-size: 13px; color: var(--text3); font-style: italic; }
+
+  .upload-zone { border: 2px dashed var(--border2); border-radius: var(--radius-sm); padding: 1.25rem; text-align: center; cursor: pointer; transition: background 0.15s, border-color 0.15s; position: relative; min-height: 80px; display: flex; align-items: center; justify-content: center; }
+  .upload-zone:hover, .upload-zone.drag { background: var(--accent-light); border-color: var(--accent); }
+  .upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; padding: 0; border: none; box-shadow: none; }
+  .upload-inner { display: flex; flex-direction: column; align-items: center; gap: 6px; pointer-events: none; }
+  .upload-icon-wrap { width: 36px; height: 36px; background: var(--surface2); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .upload-icon-wrap svg { width: 18px; height: 18px; stroke: var(--text2); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .upload-text { font-size: 13px; color: var(--text2); }
+  .upload-text span { color: var(--accent); font-weight: 500; }
+  .receipt-preview-wrap { display: flex; align-items: center; gap: 12px; pointer-events: none; }
+  .receipt-thumb { width: 56px; height: 56px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+  .receipt-pdf-thumb { width: 56px; height: 56px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface2); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 10px; color: var(--text2); font-weight: 500; }
+  .receipt-pdf-thumb svg { width: 20px; height: 20px; stroke: var(--text2); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .receipt-info { text-align: left; }
+  .receipt-name { font-size: 13px; font-weight: 500; color: var(--text); max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .receipt-sub { font-size: 11px; color: var(--text3); }
+  .receipt-rm { pointer-events: all; background: none; border: 1px solid var(--border2); border-radius: 4px; font-size: 11px; cursor: pointer; color: var(--danger); padding: 3px 8px; margin-top: 4px; }
+  .receipt-rm:hover { background: var(--danger-light); }
+
+  .form-actions { display: flex; gap: 10px; margin-top: 1.25rem; flex-wrap: wrap; align-items: center; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 20px; border-radius: var(--radius-sm); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.15s; border: 1px solid transparent; white-space: nowrap; text-decoration: none; }
+  .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn-primary:hover { background: var(--accent-text); border-color: var(--accent-text); }
+  .btn-ghost { background: transparent; color: var(--text2); border-color: var(--border2); }
+  .btn-ghost:hover { background: var(--surface2); color: var(--text); }
+  .btn-google { background: #fff; color: #3c4043; border-color: var(--border2); }
+  .btn-google:hover { background: #f5f5f5; }
+  .btn-gdrive-open { background: #e8f5e9; color: #1b6b35; border-color: #a5d6b0; }
+  .btn-gdrive-open:hover { background: #d0edda; }
+  .btn-sm { padding: 5px 12px; font-size: 12px; }
+  .btn-danger { background: transparent; color: var(--danger); border-color: #f0c0bb; }
+  .btn-danger:hover { background: var(--danger-light); }
+  .err-msg { font-size: 12px; color: var(--danger); margin-top: 8px; display: none; }
+
+  .toolbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-bottom: 14px; }
+  .toolbar input, .toolbar select { width: auto; flex: 1; min-width: 140px; max-width: 240px; }
+  .tbl-wrap { overflow-x: auto; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; table-layout: fixed; }
+  th { text-align: left; font-size: 11px; font-weight: 600; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; padding: 10px 14px; background: var(--surface2); border-bottom: 1px solid var(--border); white-space: nowrap; }
+  td { padding: 11px 14px; border-bottom: 1px solid var(--border); color: var(--text); vertical-align: middle; word-break: break-word; }
+  tr:last-child td { border-bottom: none; }
+  tbody tr:hover td { background: #faf9f7; }
+  .badge { display: inline-block; font-size: 11px; padding: 3px 9px; border-radius: 20px; font-weight: 500; }
+  .tbl-thumb { width: 44px; height: 44px; object-fit: cover; border-radius: var(--radius-sm); border: 1px solid var(--border); cursor: pointer; display: block; transition: opacity 0.15s; }
+  .tbl-thumb:hover { opacity: 0.8; }
+  .tbl-pdf { width: 44px; height: 44px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface2); display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; font-size: 9px; color: var(--text2); font-weight: 600; gap: 2px; }
+  .tbl-pdf svg { width: 16px; height: 16px; stroke: var(--text2); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .tbl-none { width: 44px; height: 44px; border-radius: var(--radius-sm); border: 1px dashed var(--border); display: flex; align-items: center; justify-content: center; }
+  .tbl-none svg { width: 16px; height: 16px; stroke: var(--border2); fill: none; stroke-width: 1.5; }
+  .act-wrap { display: flex; gap: 4px; }
+  .empty-state { text-align: center; padding: 3.5rem 1rem; }
+  .empty-icon { width: 48px; height: 48px; background: var(--surface2); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+  .empty-icon svg { width: 24px; height: 24px; stroke: var(--text3); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .empty-state p { font-size: 14px; color: var(--text2); }
+  .edit-td input, .edit-td select, .edit-td textarea { font-size: 12px; padding: 5px 8px; }
+  .edit-td textarea { min-height: 52px; }
+
+  .modal-bg { display: none; position: fixed; inset: 0; background: rgba(10,10,8,0.7); z-index: 999; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+  .modal-bg.open { display: flex; }
+  .modal-inner { background: var(--surface); border-radius: var(--radius); padding: 1rem; max-width: 92vw; max-height: 92vh; overflow: auto; position: relative; box-shadow: var(--shadow-md); }
+  .modal-inner img { max-width: 80vw; max-height: 80vh; display: block; border-radius: var(--radius-sm); }
+  .modal-close { position: absolute; top: 8px; right: 10px; background: var(--surface2); border: 1px solid var(--border); border-radius: 50%; width: 28px; height: 28px; font-size: 14px; cursor: pointer; color: var(--text2); display: flex; align-items: center; justify-content: center; }
+  .modal-close:hover { background: var(--border); }
+
+  #toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--text); color: var(--bg); padding: 10px 20px; border-radius: 30px; font-size: 13px; font-weight: 500; z-index: 9999; transition: transform 0.3s ease; pointer-events: none; white-space: nowrap; }
+  #toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 640px) {
+    .main { padding: 1rem; } header { padding: 1rem; }
+    .form-grid { grid-template-columns: 1fr; }
+    .field.span2, .field.span3 { grid-column: span 1; }
+    .metrics { grid-template-columns: 1fr 1fr; }
+    table { font-size: 12px; } th, td { padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOCK SCREEN -->
+<div id="lock-screen">
+  <div class="lock-card">
+    <div class="lock-logo">
+      <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+    </div>
+    <h2>Purchase Log</h2>
+    <p>Enter your password to continue</p>
+    <div class="lock-input-wrap">
+      <input type="password" id="pw-input" placeholder="Password" onkeydown="if(event.key==='Enter')unlock()">
+      <button class="toggle-pw" onclick="togglePw()" title="Show/hide">
+        <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <p class="lock-err" id="lock-err">Incorrect password. Please try again.</p>
+    <button class="lock-btn" onclick="unlock()">Unlock</button>
+    <p class="lock-hint">Default password: <strong></strong><br>To change it, open this file in a text editor and update <strong>APP_PASSWORD</strong> near the top of the script.</p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <header>
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M6 2h12l4 6-10 14L2 8z"/><path d="M2 8h20M12 22V8"/></svg>
+    </div>
+    <div class="header-titles">
+      <h1>Business Purchase Log</h1>
+      <p>Track and manage your business expenses</p>
+    </div>
+    <div class="header-right">
+      <div class="gdrive-status">
+        <div class="gdrive-dot" id="gdrive-dot"></div>
+        <span id="gdrive-status-text">Not connected</span>
+      </div>
+
+      <!-- Google Sheets button -->
+      <a class="btn btn-sheets btn-sm" href="https://sheets.google.com" target="_blank" rel="noopener" title="Open Google Sheets">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+        Sheets
+      </a>
+
+      <!-- "Go to GDrive" — only visible when connected -->
+      <a id="gdrive-open-btn" class="btn btn-gdrive-open btn-sm" href="https://drive.google.com" target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 87 72" fill="none"><path d="M29.08 0L0 50.4h29.08L58.16 0z" fill="#0066DA"/><path d="M58.16 0L29.08 50.4h29.08L87 0z" fill="#00AC47"/><path d="M0 50.4L14.54 72H72.46L87 50.4z" fill="#FFBA00"/></svg>
+        Go to GDrive
+      </a>
+
+      <button class="btn btn-google btn-sm" id="gdrive-btn" onclick="gdriveAction()">
+        <svg width="14" height="14" viewBox="0 0 87 72" fill="none"><path d="M29.08 0L0 50.4h29.08L58.16 0z" fill="#0066DA"/><path d="M58.16 0L29.08 50.4h29.08L87 0z" fill="#00AC47"/><path d="M0 50.4L14.54 72H72.46L87 50.4z" fill="#FFBA00"/></svg>
+        Connect Google Drive
+      </button>
+      <button class="btn btn-ghost btn-sm" onclick="lockApp()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        Lock
+      </button>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <div class="gdrive-panel" id="gdrive-panel">
+      <div class="gdrive-panel-row">
+        <svg width="18" height="18" viewBox="0 0 87 72" fill="none"><path d="M29.08 0L0 50.4h29.08L58.16 0z" fill="#0066DA"/><path d="M58.16 0L29.08 50.4h29.08L87 0z" fill="#00AC47"/><path d="M0 50.4L14.54 72H72.46L87 50.4z" fill="#FFBA00"/></svg>
+        <p id="gdrive-panel-msg">Connected to Google Drive.</p>
+        <button class="btn btn-ghost btn-sm" onclick="gdriveSave()">Save Now</button>
+        <button class="btn btn-ghost btn-sm" onclick="gdriveLoad()">Load from Drive</button>
+        <button class="btn btn-danger btn-sm" onclick="gdriveDisconnect()">Disconnect</button>
+      </div>
+    </div>
+
+    <div class="metrics">
+      <div class="metric accent"><div class="metric-label">Total Spent</div><div class="metric-value" id="m-total">$0.00</div></div>
+      <div class="metric"><div class="metric-label">Purchases</div><div class="metric-value" id="m-count">0</div></div>
+      <div class="metric"><div class="metric-label">This Month</div><div class="metric-value" id="m-month">$0.00</div></div>
+      <div class="metric"><div class="metric-label">Avg Purchase</div><div class="metric-value" id="m-avg">$0.00</div></div>
+    </div>
+
+    <p class="section-title">New Purchase</p>
+    <div class="card">
+      <div class="form-grid">
+        <div class="field">
+          <label>Store Name *</label>
+          <div class="combo-wrap" id="store-combo-wrap">
+            <input type="text" id="f-store" placeholder="Type or select a store…" autocomplete="off"
+              oninput="comboFilter('store')" onfocus="comboOpen('store')" onkeydown="comboKey(event,'store')">
+            <span class="combo-arrow"><svg viewBox="0 0 12 12"><path d="M6 8L1 3h10z"/></svg></span>
+            <div class="combo-dropdown" id="store-combo-list"></div>
+          </div>
+        </div>
+
+        <div class="field"><label>Date *</label><input type="date" id="f-date"></div>
+        <div class="field"><label>Amount ($) *</label><input type="number" id="f-amount" min="0" step="0.01" placeholder="0.00"></div>
+        <div class="field"><label>Category</label>
+          <select id="f-category"><option value="">— select —</option><option>Office Supplies</option><option>Equipment</option><option>Materials</option><option>Maintenance</option><option>Utilities</option><option>Travel</option><option>Meals</option><option>Software</option><option>Other</option></select>
+        </div>
+
+        <div class="field span2">
+          <label>Property Purchased For</label>
+          <select id="f-property">
+            <option value="">— select property —</option>
+          </select>
+        </div>
+
+        <div class="field span2"><label>Notes / Description</label><textarea id="f-notes" placeholder="What was purchased?"></textarea></div>
+        <div class="field span3">
+          <label>Receipt (image or PDF)</label>
+          <div class="upload-zone" id="drop-zone">
+            <input type="file" id="f-receipt" accept="image/*,application/pdf" onchange="handleFile(this.files[0])">
+            <div class="upload-inner" id="upload-prompt">
+              <div class="upload-icon-wrap"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+              <div class="upload-text"><span>Click to upload</span> or drag & drop</div>
+            </div>
+            <div id="upload-preview" style="display:none"></div>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-primary" onclick="addEntry()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Purchase
+        </button>
+        <button class="btn btn-ghost" onclick="clearForm()">Clear</button>
+      </div>
+      <p class="err-msg" id="form-err"></p>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px">
+      <p class="section-title" style="margin:0">Purchase History</p>
+      <button class="btn btn-ghost btn-sm" onclick="exportCSV()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export CSV
+      </button>
+    </div>
+
+    <div class="card" style="padding:1.25rem">
+      <div class="toolbar">
+        <input type="text" id="t-search" placeholder="Search store, property, notes…" oninput="render()">
+        <select id="t-cat" onchange="render()"><option value="">All categories</option><option>Office Supplies</option><option>Equipment</option><option>Materials</option><option>Maintenance</option><option>Utilities</option><option>Travel</option><option>Meals</option><option>Software</option><option>Other</option></select>
+        <select id="t-sort" onchange="render()"><option value="date-desc">Newest first</option><option value="date-asc">Oldest first</option><option value="amount-desc">Highest amount</option><option value="amount-asc">Lowest amount</option></select>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr>
+            <th style="width:60px">Receipt</th>
+            <th style="width:14%">Store</th>
+            <th style="width:92px">Date</th>
+            <th style="width:88px">Amount</th>
+            <th style="width:13%">Category</th>
+            <th style="width:14%">Property</th>
+            <th>Notes</th>
+            <th style="width:112px">Actions</th>
+          </tr></thead>
+          <tbody id="tbl-body"></tbody>
+        </table>
+        <div id="tbl-empty" class="empty-state" style="display:none">
+          <div class="empty-icon"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></div>
+          <p>No purchases yet. Add your first one above.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-bg" id="modal" onclick="closeModal()">
+  <div class="modal-inner" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+    <img id="modal-img" src="" alt="Receipt">
+  </div>
+</div>
+<div id="toast"></div>
+
+<script src="https://apis.google.com/js/api.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script>
+const APP_PASSWORD     = 'WeS76Lee%%';
+const GDRIVE_CLIENT_ID = '19954086503-0651kh0js1olfbp2dv15t9u22jnc9jor.apps.googleusercontent.com';
+
+const PROPERTY_LIST = [
+  '123 Main St – Anniston, AL',
+  '456 Oak Ave – Anniston, AL',
+  '789 Elm Rd – Rome, GA',
+  '321 Pine St – Gadsden, AL',
+];
+
+const STORE_LIST_DEFAULT = [
+  'Home Depot','Lowe\'s','Menards','Walmart','Sam\'s Club','Costco','Amazon',
+  'Ace Hardware','Harbor Freight','Tractor Supply','AutoZone','O\'Reilly Auto Parts',
+  'Sherwin-Williams','Ferguson','Fastenal',
+];
+
+const STORAGE_KEY   = 'biz_purchases_v1';
+const STORES_KEY    = 'biz_stores_v1';
+const SESSION_KEY   = 'biz_unlocked';
+const GDRIVE_SCOPES = 'https://www.googleapis.com/auth/drive.file';
+const GDRIVE_FILE   = 'business-purchases.json';
+
+let entries = [], editId = null, pendingReceipt = null;
+let gdriveFileId = null, gdriveConnected = false, tokenClient = null;
+let gdriveUrl = 'https://drive.google.com';
+let storeList = [];
+
+function loadStores() {
+  const saved = (() => { try { return JSON.parse(localStorage.getItem(STORES_KEY)) || []; } catch { return []; } })();
+  storeList = [...new Set([...STORE_LIST_DEFAULT, ...saved])].sort((a, b) => a.localeCompare(b));
+}
+function saveStores() {
+  const extras = storeList.filter(s => !STORE_LIST_DEFAULT.includes(s));
+  try { localStorage.setItem(STORES_KEY, JSON.stringify(extras)); } catch {}
+}
+function addStoreToList(name) {
+  const n = name.trim();
+  if (!n || storeList.some(s => s.toLowerCase() === n.toLowerCase())) return;
+  storeList.push(n); storeList.sort((a, b) => a.localeCompare(b)); saveStores();
+}
+
+function populatePropertyDropdown() {
+  const sel = document.getElementById('f-property');
+  sel.innerHTML = '<option value="">— select property —</option>';
+  PROPERTY_LIST.forEach(p => { const opt = document.createElement('option'); opt.value = p; opt.textContent = p; sel.appendChild(opt); });
+}
+
+let comboActiveIdx = { store: -1 };
+function comboItems(id) {
+  const q = document.getElementById('f-' + id).value.trim().toLowerCase();
+  const list = id === 'store' ? storeList : [];
+  return q ? list.filter(s => s.toLowerCase().includes(q)) : list;
+}
+function comboRender(id) {
+  const el = document.getElementById(id + '-combo-list');
+  const q  = document.getElementById('f-' + id).value.trim();
+  const items = comboItems(id);
+  const idx = comboActiveIdx[id];
+  if (!items.length && !q) { el.innerHTML = ''; el.classList.remove('open'); return; }
+  let html = '';
+  if (!items.length) {
+    html = `<div class="combo-item add-new" onclick="comboAddNew('${id}')">＋ Add "${esc(q)}"</div>`;
+  } else {
+    html = items.map((s, i) => `<div class="combo-item${i === idx ? ' active' : ''}" onclick="comboSelect('${id}','${esc(s)}')">${esc(s)}</div>`).join('');
+    const exactMatch = items.some(s => s.toLowerCase() === q.toLowerCase());
+    if (q && !exactMatch) html += `<div class="combo-item add-new" onclick="comboAddNew('${id}')">＋ Add "${esc(q)}"</div>`;
+  }
+  el.innerHTML = html; el.classList.add('open');
+}
+function comboFilter(id) { comboActiveIdx[id] = -1; comboRender(id); }
+function comboOpen(id)   { comboRender(id); }
+function comboSelect(id, val) { document.getElementById('f-' + id).value = val; document.getElementById(id + '-combo-list').classList.remove('open'); comboActiveIdx[id] = -1; }
+function comboAddNew(id) {
+  const val = document.getElementById('f-' + id).value.trim();
+  if (!val) return;
+  if (id === 'store') addStoreToList(val);
+  comboSelect(id, val); toast(`"${val}" added to store list`);
+}
+function comboKey(e, id) {
+  const el = document.getElementById(id + '-combo-list');
+  const items = comboItems(id);
+  const total = items.length + (document.getElementById('f-' + id).value.trim() ? 1 : 0);
+  if (!el.classList.contains('open')) { if (e.key === 'ArrowDown') comboOpen(id); return; }
+  if (e.key === 'ArrowDown')  { e.preventDefault(); comboActiveIdx[id] = Math.min(comboActiveIdx[id] + 1, total - 1); comboRender(id); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); comboActiveIdx[id] = Math.max(comboActiveIdx[id] - 1, -1); comboRender(id); }
+  else if (e.key === 'Enter') {
+    e.preventDefault();
+    const i = comboActiveIdx[id];
+    if (i >= 0 && i < items.length) comboSelect(id, items[i]);
+    else if (i === items.length) comboAddNew(id);
+    else { const v = document.getElementById('f-' + id).value.trim(); if (v) comboSelect(id, v); }
+  }
+  else if (e.key === 'Escape') { el.classList.remove('open'); }
+}
+document.addEventListener('click', e => {
+  ['store'].forEach(id => {
+    const wrap = document.getElementById(id + '-combo-wrap');
+    if (wrap && !wrap.contains(e.target)) document.getElementById(id + '-combo-list').classList.remove('open');
+  });
+});
+
+function unlock() {
+  if (document.getElementById('pw-input').value === APP_PASSWORD) {
+    sessionStorage.setItem(SESSION_KEY, '1');
+    document.getElementById('lock-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadLocal(); loadStores(); populatePropertyDropdown(); updateMetrics(); render(); initGdrive();
+  } else {
+    const e = document.getElementById('lock-err'); e.style.display = 'block';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+    setTimeout(() => e.style.display = 'none', 3000);
+  }
+}
+function lockApp() { sessionStorage.removeItem(SESSION_KEY); document.getElementById('app').style.display = 'none'; document.getElementById('lock-screen').style.display = 'flex'; document.getElementById('pw-input').value = ''; }
+function togglePw() { const i = document.getElementById('pw-input'); i.type = i.type === 'password' ? 'text' : 'password'; }
+
+function loadLocal() { try { entries = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { entries = []; } }
+function saveLocal() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(entries)); } catch(e) { console.warn(e); } }
+
+function initGdrive() {
+  if (!GDRIVE_CLIENT_ID || GDRIVE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID_HERE') return;
+  gapi.load('client', async () => {
+    await gapi.client.init({ discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'] });
+    tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: GDRIVE_CLIENT_ID, scope: GDRIVE_SCOPES,
+      callback: async (resp) => {
+        if (resp.error) { toast('Google sign-in failed.'); return; }
+        let email = '';
+        try { const r = await gapi.client.request({ path: 'https://www.googleapis.com/oauth2/v3/userinfo' }); email = r.result.email || ''; } catch {}
+        setConnected(true, email); await gdriveFindOrCreate();
+      }
+    });
+  });
+}
+function gdriveAction() {
+  if (!GDRIVE_CLIENT_ID || GDRIVE_CLIENT_ID === 'YOUR_GOOGLE_CLIENT_ID_HERE') { alert('Google Drive is not configured yet.'); return; }
+  if (!gdriveConnected) tokenClient.requestAccessToken({ prompt: 'consent' });
+}
+function setConnected(on, email) {
+  gdriveConnected = on;
+  document.getElementById('gdrive-dot').className = 'gdrive-dot' + (on ? ' connected' : '');
+  document.getElementById('gdrive-status-text').textContent = on ? (email || 'Connected') : 'Not connected';
+  document.getElementById('gdrive-btn').innerHTML = on
+    ? `<svg width="14" height="14" viewBox="0 0 87 72" fill="none"><path d="M29.08 0L0 50.4h29.08L58.16 0z" fill="#0066DA"/><path d="M58.16 0L29.08 50.4h29.08L87 0z" fill="#00AC47"/><path d="M0 50.4L14.54 72H72.46L87 50.4z" fill="#FFBA00"/></svg> Connected to Drive`
+    : `<svg width="14" height="14" viewBox="0 0 87 72" fill="none"><path d="M29.08 0L0 50.4h29.08L58.16 0z" fill="#0066DA"/><path d="M58.16 0L29.08 50.4h29.08L87 0z" fill="#00AC47"/><path d="M0 50.4L14.54 72H72.46L87 50.4z" fill="#FFBA00"/></svg> Connect Google Drive`;
+  document.getElementById('gdrive-panel').className = 'gdrive-panel' + (on ? ' visible' : '');
+  if (on && email) document.getElementById('gdrive-panel-msg').innerHTML = `Connected as <strong>${email}</strong>. Data saves automatically on every change.`;
+  const openBtn = document.getElementById('gdrive-open-btn');
+  if (on) { openBtn.classList.add('visible'); openBtn.href = gdriveUrl; } else { openBtn.classList.remove('visible'); }
+}
+function gdriveDisconnect() {
+  try { google.accounts.oauth2.revoke(gapi.client.getToken()?.access_token, () => {}); } catch {}
+  gapi.client.setToken(null); gdriveConnected = false; gdriveFileId = null; setConnected(false, ''); toast('Disconnected from Google Drive');
+}
+async function gdriveFindOrCreate() {
+  setSyncing(true);
+  try {
+    const list = await gapi.client.drive.files.list({ q: `name='${GDRIVE_FILE}' and trashed=false`, fields: 'files(id,webViewLink)', spaces: 'drive' });
+    if (list.result.files.length > 0) {
+      gdriveFileId = list.result.files[0].id;
+      if (list.result.files[0].webViewLink) gdriveUrl = list.result.files[0].webViewLink;
+      document.getElementById('gdrive-open-btn').href = gdriveUrl;
+      await gdriveLoad();
+    } else { await gdriveSave(); toast('New Drive file created: ' + GDRIVE_FILE); }
+  } catch(e) { toast('Drive error: ' + e.message); }
+  setSyncing(false);
+}
+async function gdriveSave() {
+  if (!gdriveConnected) { toast('Connect Google Drive first'); return; }
+  setSyncing(true);
+  try {
+    const body = JSON.stringify(entries);
+    if (gdriveFileId) {
+      await gapi.client.request({ path: `/upload/drive/v3/files/${gdriveFileId}`, method: 'PATCH', params: { uploadType: 'media' }, headers: { 'Content-Type': 'application/json' }, body });
+    } else {
+      const m = await gapi.client.drive.files.create({ resource: { name: GDRIVE_FILE, mimeType: 'application/json' }, fields: 'id,webViewLink' });
+      gdriveFileId = m.result.id;
+      if (m.result.webViewLink) { gdriveUrl = m.result.webViewLink; document.getElementById('gdrive-open-btn').href = gdriveUrl; }
+      await gapi.client.request({ path: `/upload/drive/v3/files/${gdriveFileId}`, method: 'PATCH', params: { uploadType: 'media' }, headers: { 'Content-Type': 'application/json' }, body });
+    }
+    toast('Saved to Google Drive');
+  } catch(e) { toast('Save failed: ' + e.message); }
+  setSyncing(false);
+}
+async function gdriveLoad() {
+  if (!gdriveConnected || !gdriveFileId) { toast('Connect Google Drive first'); return; }
+  setSyncing(true);
+  try {
+    const r = await gapi.client.drive.files.get({ fileId: gdriveFileId, alt: 'media' });
+    const data = typeof r.result === 'string' ? JSON.parse(r.result) : r.result;
+    if (Array.isArray(data)) { entries = data; saveLocal(); updateMetrics(); render(); toast('Loaded from Google Drive'); }
+  } catch(e) { toast('Load failed: ' + e.message); }
+  setSyncing(false);
+}
+function setSyncing(on) { document.getElementById('gdrive-dot').className = 'gdrive-dot' + (on ? ' syncing' : (gdriveConnected ? ' connected' : '')); }
+
+function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2800); }
+function todayStr() { return new Date().toISOString().split('T')[0]; }
+
+window.addEventListener('DOMContentLoaded', () => {
+  const dz = document.getElementById('drop-zone');
+  if (!dz) return;
+  dz.addEventListener('dragover',  e => { e.preventDefault(); dz.classList.add('drag'); });
+  dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
+  dz.addEventListener('drop', e => { e.preventDefault(); dz.classList.remove('drag'); if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
+  document.getElementById('f-date').value = todayStr();
+});
+
+function handleFile(file) {
+  if (!file) return;
+  const r = new FileReader();
+  r.onload = ev => { pendingReceipt = { name: file.name, type: file.type, data: ev.target.result }; showUploadPreview(pendingReceipt); };
+  r.readAsDataURL(file);
+}
+function showUploadPreview(rc) {
+  document.getElementById('upload-prompt').style.display = 'none';
+  const p = document.getElementById('upload-preview'); p.style.display = 'block';
+  const isImg = rc.type && rc.type.startsWith('image/');
+  p.innerHTML = `<div class="receipt-preview-wrap">
+    ${isImg ? `<img class="receipt-thumb" src="${rc.data}" alt="receipt">` : `<div class="receipt-pdf-thumb"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>PDF</div>`}
+    <div class="receipt-info"><div class="receipt-name">${rc.name}</div><div class="receipt-sub">Ready to attach</div><button class="receipt-rm" onclick="clearReceipt()">Remove</button></div>
+  </div>`;
+}
+function clearReceipt() {
+  pendingReceipt = null;
+  document.getElementById('upload-prompt').style.display = 'flex';
+  document.getElementById('upload-preview').style.display = 'none';
+  document.getElementById('upload-preview').innerHTML = '';
+  document.getElementById('f-receipt').value = '';
+}
+
+function showErr(msg) { const e = document.getElementById('form-err'); e.textContent = msg; e.style.display = msg ? 'block' : 'none'; }
+function addEntry() {
+  const store = document.getElementById('f-store').value.trim();
+  const date  = document.getElementById('f-date').value;
+  const amt   = parseFloat(document.getElementById('f-amount').value);
+  if (!store) { showErr('Store name is required.'); return; }
+  if (!date)  { showErr('Date is required.'); return; }
+  if (isNaN(amt) || amt < 0) { showErr('Please enter a valid amount.'); return; }
+  showErr('');
+  addStoreToList(store);
+  entries.unshift({ id: Date.now(), store, date, amount: amt,
+    category: document.getElementById('f-category').value,
+    property: document.getElementById('f-property').value,
+    notes:    document.getElementById('f-notes').value.trim(),
+    receipt:  pendingReceipt ? { ...pendingReceipt } : null });
+  saveLocal(); if (gdriveConnected) gdriveSave();
+  clearForm(); updateMetrics(); render();
+}
+function clearForm() {
+  document.getElementById('f-store').value = '';
+  document.getElementById('f-property').value = '';
+  document.getElementById('f-notes').value = '';
+  document.getElementById('f-amount').value = '';
+  document.getElementById('f-category').value = '';
+  document.getElementById('f-date').value = todayStr();
+  clearReceipt(); showErr('');
+}
+function deleteEntry(id) {
+  if (!confirm('Delete this purchase?')) return;
+  entries = entries.filter(e => e.id !== id);
+  saveLocal(); if (gdriveConnected) gdriveSave(); updateMetrics(); render();
+}
+function startEdit(id)  { editId = id; render(); }
+function cancelEdit()   { editId = null; delete window._editReceipt; render(); }
+function saveEdit(id) {
+  const store = document.getElementById('e-store-' + id).value.trim();
+  const date  = document.getElementById('e-date-' + id).value;
+  const amt   = parseFloat(document.getElementById('e-amount-' + id).value);
+  if (!store || !date || isNaN(amt)) return;
+  const i = entries.findIndex(e => e.id === id);
+  const receipt = window._editReceipt !== undefined ? window._editReceipt : entries[i].receipt;
+  entries[i] = { ...entries[i], store, date, amount: amt,
+    category: document.getElementById('e-category-' + id).value,
+    property: document.getElementById('e-property-' + id).value,
+    notes:    document.getElementById('e-notes-' + id).value.trim(), receipt };
+  delete window._editReceipt;
+  editId = null; saveLocal(); if (gdriveConnected) gdriveSave(); updateMetrics(); render();
+}
+function handleEditFile(file) {
+  if (!file) return;
+  const r = new FileReader();
+  r.onload = ev => { window._editReceipt = { name: file.name, type: file.type, data: ev.target.result }; const el = document.getElementById('edit-rcpt-preview'); if (el) el.innerHTML = thumbHTML(window._editReceipt); };
+  r.readAsDataURL(file);
+}
+function clearEditReceipt() { window._editReceipt = null; const el = document.getElementById('edit-rcpt-preview'); if (el) el.innerHTML = noThumb(); }
+
+function thumbHTML(rc) {
+  if (!rc) return noThumb();
+  if (rc.type && rc.type.startsWith('image/')) return `<img class="tbl-thumb" src="${rc.data}" onclick="openModal('${rc.data}')" alt="receipt">`;
+  return `<div class="tbl-pdf" onclick="openPDF('${rc.data}')"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>PDF</div>`;
+}
+function noThumb() { return `<div class="tbl-none"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>`; }
+function openModal(src) { document.getElementById('modal-img').src = src; document.getElementById('modal').classList.add('open'); }
+function openPDF(src) { window.open(src, '_blank'); }
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+
+function updateMetrics() {
+  const total = entries.reduce((s, e) => s + e.amount, 0);
+  document.getElementById('m-total').textContent = '$' + total.toFixed(2);
+  document.getElementById('m-count').textContent = entries.length;
+  const ym = new Date().toISOString().slice(0, 7);
+  const mTotal = entries.filter(e => e.date.startsWith(ym)).reduce((s, e) => s + e.amount, 0);
+  document.getElementById('m-month').textContent = '$' + mTotal.toFixed(2);
+  document.getElementById('m-avg').textContent = entries.length ? '$' + (total / entries.length).toFixed(2) : '$0.00';
+}
+
+const catColors = {
+  'Office Supplies': {bg:'#EBF3FF',text:'#1a4a8a'}, 'Equipment': {bg:'#F0EEFF',text:'#3d2d9e'},
+  'Materials':       {bg:'#E8F7F0',text:'#1a5c3e'}, 'Maintenance': {bg:'#FEF6E4',text:'#7a4a0a'},
+  'Utilities':       {bg:'#FFF0E8',text:'#8a3010'}, 'Travel':    {bg:'#FEE8F4',text:'#7a1a50'},
+  'Meals':           {bg:'#EDFAEE',text:'#1a6020'}, 'Software':  {bg:'#E6F4FF',text:'#0a4878'},
+  'Other':           {bg:'#F0EDE8',text:'#5a5550'}
+};
+
+function filtered() {
+  const q    = document.getElementById('t-search').value.toLowerCase();
+  const cat  = document.getElementById('t-cat').value;
+  const sort = document.getElementById('t-sort').value;
+  let res = entries.filter(e => (!q || (e.store + e.property + e.notes + e.category).toLowerCase().includes(q)) && (!cat || e.category === cat));
+  if (sort === 'date-desc')    res.sort((a, b) => b.date.localeCompare(a.date));
+  else if (sort === 'date-asc')    res.sort((a, b) => a.date.localeCompare(b.date));
+  else if (sort === 'amount-desc') res.sort((a, b) => b.amount - a.amount);
+  else res.sort((a, b) => a.amount - b.amount);
+  return res;
+}
+function fmtDate(d) { if (!d) return ''; const [y, m, day] = d.split('-'); return m + '/' + day + '/' + y; }
+function catOpts(sel) { return ['Office Supplies','Equipment','Materials','Maintenance','Utilities','Travel','Meals','Software','Other'].map(c => `<option value="${c}"${sel === c ? ' selected' : ''}>${c}</option>`).join(''); }
+function propOpts(sel) { return PROPERTY_LIST.map(p => `<option value="${p}"${sel === p ? ' selected' : ''}>${esc(p)}</option>`).join(''); }
+function esc(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function render() {
+  const rows  = filtered();
+  const body  = document.getElementById('tbl-body');
+  const empty = document.getElementById('tbl-empty');
+  if (!rows.length) { body.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+  body.innerHTML = rows.map(e => {
+    const col   = catColors[e.category] || {bg:'#F0EDE8',text:'#5a5550'};
+    const badge = e.category ? `<span class="badge" style="background:${col.bg};color:${col.text}">${esc(e.category)}</span>` : '';
+    if (editId === e.id) {
+      const cur = window._editReceipt !== undefined ? window._editReceipt : e.receipt;
+      return `<tr>
+        <td class="edit-td"><div id="edit-rcpt-preview">${thumbHTML(cur)}</div>
+          <div style="margin-top:6px;display:flex;flex-direction:column;gap:4px">
+            <input type="file" accept="image/*,application/pdf" onchange="handleEditFile(this.files[0])" style="font-size:11px;padding:3px 0;border:none;box-shadow:none">
+            ${e.receipt || window._editReceipt ? `<button onclick="clearEditReceipt()" class="btn btn-ghost btn-sm" style="font-size:10px;padding:3px 8px;color:var(--danger)">Remove</button>` : ''}
+          </div></td>
+        <td class="edit-td"><input id="e-store-${e.id}" type="text" value="${esc(e.store)}"></td>
+        <td class="edit-td"><input id="e-date-${e.id}" type="date" value="${e.date}"></td>
+        <td class="edit-td"><input id="e-amount-${e.id}" type="number" value="${e.amount}" step="0.01"></td>
+        <td class="edit-td"><select id="e-category-${e.id}"><option value=""></option>${catOpts(e.category)}</select></td>
+        <td class="edit-td"><select id="e-property-${e.id}"><option value="">— select —</option>${propOpts(e.property||'')}</select></td>
+        <td class="edit-td"><textarea id="e-notes-${e.id}">${esc(e.notes||'')}</textarea></td>
+        <td><div class="act-wrap"><button class="btn btn-primary btn-sm" onclick="saveEdit(${e.id})">Save</button><button class="btn btn-ghost btn-sm" onclick="cancelEdit()">Cancel</button></div></td>
+      </tr>`;
+    }
+    return `<tr>
+      <td>${thumbHTML(e.receipt)}</td>
+      <td style="font-weight:500">${esc(e.store)}</td>
+      <td style="color:var(--text2);font-family:'DM Mono',monospace;font-size:12px">${fmtDate(e.date)}</td>
+      <td style="font-weight:600;font-family:'DM Mono',monospace">$${e.amount.toFixed(2)}</td>
+      <td>${badge}</td>
+      <td style="color:var(--text2)">${esc(e.property) || '—'}</td>
+      <td style="color:var(--text2)">${esc(e.notes)}</td>
+      <td><div class="act-wrap"><button class="btn btn-ghost btn-sm" onclick="startEdit(${e.id})">Edit</button><button class="btn btn-danger btn-sm" onclick="deleteEntry(${e.id})">Del</button></div></td>
+    </tr>`;
+  }).join('');
+}
+
+function exportCSV() {
+  if (!entries.length) return;
+  const head = ['Store','Date','Amount','Category','Property','Notes','Receipt'];
+  const rows  = entries.map(e => [e.store, e.date, e.amount.toFixed(2), e.category, e.property, e.notes, e.receipt ? e.receipt.name : ''].map(v => `"${(v||'').replace(/"/g,'""')}"`).join(','));
+  const a = document.createElement('a'); a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent([head.join(','), ...rows].join('\n')); a.download = 'purchases.csv'; a.click();
+}
+
+if (sessionStorage.getItem(SESSION_KEY)) {
+  document.getElementById('lock-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  loadLocal(); loadStores(); populatePropertyDropdown(); updateMetrics(); render(); initGdrive();
+}
+</script>
+</body>
+</html>
