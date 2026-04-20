@@ -395,8 +395,13 @@
 
       const R2_WORKER = "https://wlgre-receipt-upload.old-math-e246.workers.dev";
 
+      const PROPERTY_LIST = ["5405","5410","5414","6216","831","833","835","837"];
+      const STORE_LIST_DEFAULT = ["Home Depot","Lowe's","Walmart","Sam's Club","Costco","Amazon","Ace Hardware","Harbor Freight","Tractor Supply"];
+      const STORES_KEY = "biz_stores_v1";
+      const PROPERTIES_KEY = "biz_properties_v1";
+
       let entries = [], editId = null, pendingReceipt = null;
-      let storeList = [], propertyList = [];
+      let storeList = [];
 
       // ── STATUS ───────────────────────────────────────────────────
       function setDbStatus(state, msg) {
@@ -407,40 +412,34 @@
       }
 
       // ── STORES ───────────────────────────────────────────────────
-      async function loadStores() {
-        try {
-          const { data, error } = await sb.from('vendors').select('name').order('sort_order');
-          if (error) throw error;
-          storeList = (data || []).map(v => v.name);
-        } catch(e) {
-          storeList = ["Home Depot","Lowe's","Walmart","Sam's Club","Costco","Amazon","Ace Hardware","Harbor Freight","Tractor Supply"];
-        }
+      function loadStores() {
+        const saved = (() => { try { return JSON.parse(localStorage.getItem(STORES_KEY)) || []; } catch { return []; } })();
+        storeList = [...new Set([...STORE_LIST_DEFAULT, ...saved])].sort((a,b) => a.localeCompare(b));
       }
-      async function addStoreToList(name) {
+      function saveStores() {
+        const extras = storeList.filter(s => !STORE_LIST_DEFAULT.includes(s));
+        try { localStorage.setItem(STORES_KEY, JSON.stringify(extras)); } catch {}
+      }
+      function addStoreToList(name) {
         const n = name.trim();
         if (!n || storeList.some(s => s.toLowerCase() === n.toLowerCase())) return;
-        try {
-          await sb.from('vendors').insert({ name: n, sort_order: storeList.length + 1 });
-          storeList.push(n);
-          storeList.sort((a,b) => a.localeCompare(b));
-        } catch(e) { console.warn('Could not save vendor:', e.message); }
+        storeList.push(n);
+        storeList.sort((a,b) => a.localeCompare(b));
+        saveStores();
       }
 
       // ── PROPERTIES ───────────────────────────────────────────────
-      async function loadProperties() {
+      function getPropertyList() {
         try {
-          const { data, error } = await sb.from('purchase_properties').select('name').order('sort_order');
-          if (error) throw error;
-          propertyList = (data || []).map(p => p.name);
-        } catch(e) {
-          propertyList = ["5405","5410","5414","6216","831","833","835","837"];
-        }
+          const saved = JSON.parse(localStorage.getItem(PROPERTIES_KEY));
+          if (Array.isArray(saved) && saved.length) return saved;
+        } catch {}
+        return PROPERTY_LIST;
       }
-      function getPropertyList() { return propertyList; }
       function populatePropertyDropdown() {
         const sel = document.getElementById("f-property");
         sel.innerHTML = '<option value="">— select property —</option>';
-        propertyList.forEach(p => {
+        getPropertyList().forEach(p => {
           const opt = document.createElement("option");
           opt.value = p; opt.textContent = p;
           sel.appendChild(opt);
@@ -1081,12 +1080,9 @@
       }
 
       // ── INIT ─────────────────────────────────────────────────────
-      async function init() {
-        await Promise.all([loadStores(), loadProperties()]);
-        populatePropertyDropdown();
-        await loadFromSupabase();
-      }
-      init();
+      loadStores();
+      populatePropertyDropdown();
+      loadFromSupabase();
     </script>
   </body>
 </html>
