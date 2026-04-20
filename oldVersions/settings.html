@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Settings — Business Purchase Log</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
       :root {
@@ -15,14 +16,9 @@
         --danger: #c0392b; --danger-light: #fdf0ee;
         --radius: 10px; --radius-sm: 6px;
         --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
-        --shadow-md: 0 4px 12px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
       }
       body { font-family: "DM Sans", sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
-      header {
-        background: var(--surface); border-bottom: 1px solid var(--border);
-        padding: 1rem 2rem; display: flex; align-items: center; gap: 12px;
-        position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow);
-      }
+      header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); }
       .logo-mark { width: 36px; height: 36px; background: var(--accent); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
       .logo-mark svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
       .header-titles h1 { font-size: 17px; font-weight: 600; }
@@ -49,19 +45,17 @@
       .add-row input { flex: 1; font-family: "DM Sans", sans-serif; font-size: 14px; padding: 8px 12px; border: 1px solid var(--border2); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); outline: none; transition: border-color 0.15s, box-shadow 0.15s; }
       .add-row input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(42,92,69,0.12); }
       .list-body { padding: 0; }
-      .list-item { display: flex; align-items: center; gap: 10px; padding: 10px 1.25rem; border-bottom: 1px solid var(--border); transition: background 0.1s; user-select: none; }
+      .list-item { display: flex; align-items: center; gap: 10px; padding: 10px 1.25rem; border-bottom: 1px solid var(--border); transition: background 0.1s; }
       .list-item:last-child { border-bottom: none; }
       .list-item:hover { background: var(--surface2); }
-      .list-item.dragging { opacity: 0.4; }
-      .list-item.drag-over { background: var(--accent-light); border-color: var(--accent); }
-      .drag-handle { cursor: grab; color: var(--text3); flex-shrink: 0; display: flex; align-items: center; padding: 2px 4px; border-radius: 4px; transition: color 0.15s; }
+      .drag-handle { cursor: grab; color: var(--text3); flex-shrink: 0; display: flex; align-items: center; padding: 2px 4px; border-radius: 4px; }
       .drag-handle:hover { color: var(--text2); }
-      .drag-handle:active { cursor: grabbing; }
       .drag-handle svg { width: 14px; height: 14px; fill: currentColor; }
       .item-name { flex: 1; font-size: 14px; font-weight: 500; }
       .item-name-input { flex: 1; font-family: "DM Sans", sans-serif; font-size: 14px; font-weight: 500; padding: 5px 10px; border: 1px solid var(--accent); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); outline: none; box-shadow: 0 0 0 3px rgba(42,92,69,0.12); }
       .item-actions { display: flex; gap: 4px; flex-shrink: 0; }
       .empty-state { padding: 2rem 1.25rem; text-align: center; color: var(--text3); font-size: 13px; font-style: italic; }
+      .loading-row { padding: 1.5rem; text-align: center; color: var(--text3); font-size: 13px; }
       .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--text); color: #fff; padding: 10px 20px; border-radius: 8px; font-size: 13px; font-weight: 500; opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 9999; white-space: nowrap; }
       .toast.show { opacity: 1; }
       .pb-spacer { height: 80px; }
@@ -89,10 +83,9 @@
     <main class="main">
       <div class="page-header">
         <h2>Settings</h2>
-        <p>Manage your properties and vendors. Changes are saved automatically.</p>
+        <p>Manage your properties and vendors. Changes are saved to the database.</p>
       </div>
 
-      <!-- Properties -->
       <div class="section">
         <div class="section-head">
           <div class="section-head-left">
@@ -105,10 +98,9 @@
           <input type="text" id="prop-input" placeholder="Add property name or address…" maxlength="100" />
           <button class="btn btn-primary btn-sm" onclick="addProperty()">Add</button>
         </div>
-        <div class="list-body" id="prop-list"></div>
+        <div class="list-body" id="prop-list"><div class="loading-row">Loading…</div></div>
       </div>
 
-      <!-- Vendors -->
       <div class="section">
         <div class="section-head">
           <div class="section-head-left">
@@ -121,7 +113,7 @@
           <input type="text" id="vendor-input" placeholder="Add vendor or store name…" maxlength="100" />
           <button class="btn btn-primary btn-sm" onclick="addVendor()">Add</button>
         </div>
-        <div class="list-body" id="vendor-list"></div>
+        <div class="list-body" id="vendor-list"><div class="loading-row">Loading…</div></div>
       </div>
 
       <div class="pb-spacer"></div>
@@ -130,45 +122,49 @@
     <div class="toast" id="toast"></div>
 
     <script>
-      const PROPERTIES_KEY = "biz_properties_v1";
-      const STORES_KEY = "biz_stores_v1";
-      const PROPERTY_DEFAULTS = ["5405","5410","5414","6216","831","833","835","837"];
-      const VENDOR_DEFAULTS = ["Home Depot","Lowe's","Walmart","Sam's Club","Costco","Amazon","Ace Hardware","Harbor Freight","Tractor Supply"];
+      const SUPABASE_URL = 'https://hoouyjfsavketbdeipcb.supabase.co';
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhvb3V5amZzYXZrZXRiZGVpcGNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1NzQwMDIsImV4cCI6MjA5MjE1MDAwMn0.mGcba3rJFNRyQrnFrcs-KOdMP3x_2yNhmYSBx6QFhmk';
+      const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
       let properties = [], vendors = [];
       let dragSrc = null, dragList = null;
-
-      function load() {
-        try { const p = JSON.parse(localStorage.getItem(PROPERTIES_KEY)); properties = Array.isArray(p) && p.length ? p : [...PROPERTY_DEFAULTS]; } catch { properties = [...PROPERTY_DEFAULTS]; }
-        try { const v = JSON.parse(localStorage.getItem(STORES_KEY)); vendors = Array.isArray(v) && v.length ? v : [...VENDOR_DEFAULTS]; } catch { vendors = [...VENDOR_DEFAULTS]; }
-      }
-
-      function save() {
-        localStorage.setItem(PROPERTIES_KEY, JSON.stringify(properties));
-        localStorage.setItem(STORES_KEY, JSON.stringify(vendors));
-        toast("Saved");
-      }
 
       function toast(msg) {
         const el = document.getElementById("toast");
         el.textContent = msg; el.classList.add("show");
         clearTimeout(el._t); el._t = setTimeout(() => el.classList.remove("show"), 2000);
       }
+      function esc(s) { return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+
+      async function loadAll() {
+        try {
+          const [{ data: props, error: e1 }, { data: vends, error: e2 }] = await Promise.all([
+            sb.from('purchase_properties').select('*').order('sort_order'),
+            sb.from('vendors').select('*').order('sort_order'),
+          ]);
+          if (e1) throw e1;
+          if (e2) throw e2;
+          properties = props || [];
+          vendors = vends || [];
+          renderProperties();
+          renderVendors();
+        } catch(e) { toast('Failed to load: ' + e.message); }
+      }
 
       function renderProperties() {
         const el = document.getElementById("prop-list");
         document.getElementById("prop-count").textContent = properties.length + " total";
         if (!properties.length) { el.innerHTML = '<div class="empty-state">No properties yet. Add one above.</div>'; return; }
-        el.innerHTML = properties.map((p,i) => itemHTML(p,i,"prop")).join("");
-        attachDrag("prop-list","prop");
+        el.innerHTML = properties.map((p,i) => itemHTML(p.name, i, "prop")).join("");
+        attachDrag("prop-list", "prop");
       }
 
       function renderVendors() {
         const el = document.getElementById("vendor-list");
         document.getElementById("vendor-count").textContent = vendors.length + " total";
         if (!vendors.length) { el.innerHTML = '<div class="empty-state">No vendors yet. Add one above.</div>'; return; }
-        el.innerHTML = vendors.map((v,i) => itemHTML(v,i,"vendor")).join("");
-        attachDrag("vendor-list","vendor");
+        el.innerHTML = vendors.map((v,i) => itemHTML(v.name, i, "vendor")).join("");
+        attachDrag("vendor-list", "vendor");
       }
 
       function itemHTML(name, i, type) {
@@ -188,22 +184,34 @@
         </div>`;
       }
 
-      function esc(s) { return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
-
-      function addProperty() {
+      async function addProperty() {
         const inp = document.getElementById("prop-input");
         const val = inp.value.trim();
         if (!val) return;
-        if (properties.some(p => p.toLowerCase() === val.toLowerCase())) { toast("Already exists"); return; }
-        properties.push(val); save(); renderProperties(); inp.value = ""; inp.focus();
+        if (properties.some(p => p.name.toLowerCase() === val.toLowerCase())) { toast("Already exists"); return; }
+        try {
+          const { data, error } = await sb.from('purchase_properties').insert({ name: val, sort_order: properties.length + 1 }).select().single();
+          if (error) throw error;
+          properties.push(data);
+          renderProperties();
+          inp.value = ""; inp.focus();
+          toast("Property added");
+        } catch(e) { toast("Failed: " + e.message); }
       }
 
-      function addVendor() {
+      async function addVendor() {
         const inp = document.getElementById("vendor-input");
         const val = inp.value.trim();
         if (!val) return;
-        if (vendors.some(v => v.toLowerCase() === val.toLowerCase())) { toast("Already exists"); return; }
-        vendors.push(val); save(); renderVendors(); inp.value = ""; inp.focus();
+        if (vendors.some(v => v.name.toLowerCase() === val.toLowerCase())) { toast("Already exists"); return; }
+        try {
+          const { data, error } = await sb.from('vendors').insert({ name: val, sort_order: vendors.length + 1 }).select().single();
+          if (error) throw error;
+          vendors.push(data);
+          renderVendors();
+          inp.value = ""; inp.focus();
+          toast("Vendor added");
+        } catch(e) { toast("Failed: " + e.message); }
       }
 
       document.addEventListener("DOMContentLoaded", () => {
@@ -214,24 +222,30 @@
       function startEdit(type, i) {
         const list = type==="prop" ? properties : vendors;
         const nameEl = document.getElementById(`${type}-name-${i}`);
-        const current = list[i];
+        const current = list[i].name;
         nameEl.outerHTML = `<input class="item-name-input" id="${type}-edit-${i}" type="text" value="${esc(current)}" maxlength="100"
           onblur="commitEdit('${type}',${i})"
           onkeydown="if(event.key==='Enter')commitEdit('${type}',${i});if(event.key==='Escape')cancelEdit('${type}',${i},this.dataset.orig)"
           data-orig="${esc(current)}" />`;
-        const input = document.getElementById(`${type}-edit-${i}`);
-        input.focus(); input.select();
+        document.getElementById(`${type}-edit-${i}`).focus();
+        document.getElementById(`${type}-edit-${i}`).select();
       }
 
-      function commitEdit(type, i) {
+      async function commitEdit(type, i) {
         const input = document.getElementById(`${type}-edit-${i}`);
         if (!input) return;
         const val = input.value.trim();
         const list = type==="prop" ? properties : vendors;
+        const table = type==="prop" ? "purchase_properties" : "vendors";
         if (!val) { cancelEdit(type, i, input.dataset.orig); return; }
-        if (val !== list[i] && list.some((x,j) => j!==i && x.toLowerCase()===val.toLowerCase())) { toast("Already exists"); cancelEdit(type, i, input.dataset.orig); return; }
-        list[i] = val; save();
-        if (type==="prop") renderProperties(); else renderVendors();
+        if (val !== list[i].name && list.some((x,j) => j!==i && x.name.toLowerCase()===val.toLowerCase())) { toast("Already exists"); cancelEdit(type, i, input.dataset.orig); return; }
+        try {
+          const { error } = await sb.from(table).update({ name: val }).eq('id', list[i].id);
+          if (error) throw error;
+          list[i].name = val;
+          if (type==="prop") renderProperties(); else renderVendors();
+          toast("Saved");
+        } catch(e) { toast("Failed: " + e.message); cancelEdit(type, i, input.dataset.orig); }
       }
 
       function cancelEdit(type, i, orig) {
@@ -240,12 +254,18 @@
         input.outerHTML = `<span class="item-name" id="${type}-name-${i}">${esc(orig)}</span>`;
       }
 
-      function deleteItem(type, i) {
+      async function deleteItem(type, i) {
         const list = type==="prop" ? properties : vendors;
-        const name = list[i];
+        const table = type==="prop" ? "purchase_properties" : "vendors";
+        const name = list[i].name;
         if (!confirm(`Delete "${name}"?`)) return;
-        list.splice(i, 1); save();
-        if (type==="prop") renderProperties(); else renderVendors();
+        try {
+          const { error } = await sb.from(table).delete().eq('id', list[i].id);
+          if (error) throw error;
+          list.splice(i, 1);
+          if (type==="prop") renderProperties(); else renderVendors();
+          toast("Deleted");
+        } catch(e) { toast("Failed: " + e.message); }
       }
 
       function attachDrag(containerId, type) {
@@ -254,23 +274,24 @@
           item.addEventListener("dragstart", e => { dragSrc=item; dragList=type; e.dataTransfer.effectAllowed="move"; setTimeout(() => item.classList.add("dragging"), 0); });
           item.addEventListener("dragend", () => { item.classList.remove("dragging"); container.querySelectorAll(".list-item").forEach(i => i.classList.remove("drag-over")); });
           item.addEventListener("dragover", e => { e.preventDefault(); if (dragList!==type) return; e.dataTransfer.dropEffect="move"; container.querySelectorAll(".list-item").forEach(i => i.classList.remove("drag-over")); if (item!==dragSrc) item.classList.add("drag-over"); });
-          item.addEventListener("drop", e => {
+          item.addEventListener("drop", async e => {
             e.preventDefault();
             if (!dragSrc||dragSrc===item||dragList!==type) return;
             const fromIdx = parseInt(dragSrc.dataset.index);
             const toIdx = parseInt(item.dataset.index);
             const list = type==="prop" ? properties : vendors;
+            const table = type==="prop" ? "purchase_properties" : "vendors";
             const [moved] = list.splice(fromIdx, 1);
             list.splice(toIdx, 0, moved);
-            save();
+            try {
+              await Promise.all(list.map((itm, idx) => sb.from(table).update({ sort_order: idx + 1 }).eq('id', itm.id)));
+            } catch(e) { toast("Reorder failed: " + e.message); }
             if (type==="prop") renderProperties(); else renderVendors();
           });
         });
       }
 
-      load();
-      renderProperties();
-      renderVendors();
+      loadAll();
     </script>
   </body>
 </html>
