@@ -19,15 +19,8 @@
         --shadow-md: 0 4px 12px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.06);
       }
       body { font-family: "DM Sans", sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
-      header {
-        background: var(--surface); border-bottom: 1px solid var(--border);
-        padding: 1rem 2rem; display: flex; align-items: center; gap: 12px;
-        position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); flex-wrap: wrap;
-      }
-      .logo-mark {
-        width: 36px; height: 36px; background: var(--accent); border-radius: var(--radius-sm);
-        display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-      }
+      header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow); flex-wrap: wrap; }
+      .logo-mark { width: 36px; height: 36px; background: var(--accent); border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
       .logo-mark svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
       .header-titles h1 { font-size: 17px; font-weight: 600; }
       .header-titles p { font-size: 13px; color: var(--text2); margin-top: 1px; }
@@ -51,19 +44,10 @@
       .field.span2 { grid-column: span 2; }
       .field.span3 { grid-column: span 3; }
       label { font-size: 12px; font-weight: 600; color: var(--text2); letter-spacing: 0.03em; }
-      input[type="text"], input[type="number"], input[type="date"], select, textarea {
-        width: 100%; font-family: "DM Sans", sans-serif; font-size: 14px;
-        padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm);
-        background: var(--surface); color: var(--text);
-        transition: border-color 0.15s, box-shadow 0.15s; outline: none;
-        appearance: none; -webkit-appearance: none;
-      }
+      input[type="text"], input[type="number"], input[type="date"], select, textarea { width: 100%; font-family: "DM Sans", sans-serif; font-size: 14px; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); color: var(--text); transition: border-color 0.15s, box-shadow 0.15s; outline: none; appearance: none; -webkit-appearance: none; }
       input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(42,92,69,0.12); }
       textarea { resize: vertical; min-height: 72px; line-height: 1.5; }
-      select {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b6760' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-        background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px;
-      }
+      select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b6760' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
       .combo-wrap { position: relative; }
       .combo-wrap input { padding-right: 32px; }
       .combo-arrow { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--text2); }
@@ -73,12 +57,7 @@
       .combo-item { padding: 9px 12px; font-size: 13.5px; cursor: pointer; color: var(--text); }
       .combo-item:hover, .combo-item.active { background: var(--accent-light); color: var(--accent-text); }
       .combo-item.add-new { color: var(--accent); font-weight: 500; border-top: 1px solid var(--border); }
-      .upload-zone {
-        border: 2px dashed var(--border2); border-radius: var(--radius-sm);
-        padding: 1.25rem; text-align: center; cursor: pointer;
-        transition: background 0.15s, border-color 0.15s;
-        position: relative; min-height: 80px; display: flex; align-items: center; justify-content: center;
-      }
+      .upload-zone { border: 2px dashed var(--border2); border-radius: var(--radius-sm); padding: 1.25rem; text-align: center; cursor: pointer; transition: background 0.15s, border-color 0.15s; position: relative; min-height: 80px; display: flex; align-items: center; justify-content: center; }
       .upload-zone:hover, .upload-zone.drag { background: var(--accent-light); border-color: var(--accent); }
       .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; padding: 0; border: none; box-shadow: none; }
       .upload-inner { display: flex; flex-direction: column; align-items: center; gap: 6px; pointer-events: none; }
@@ -166,6 +145,7 @@
       #toast.show { transform: translateX(-50%) translateY(0); }
       .loading-overlay { position: fixed; inset: 0; background: rgba(247,246,243,0.8); z-index: 500; display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 14px; color: var(--text2); }
       .loading-overlay .ai-spin { width: 20px; height: 20px; border-width: 3px; }
+      .csv-hint { font-size: 12px; background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; color: var(--text3); line-height: 1.6; }
       @media (max-width: 640px) {
         .main { padding: 1rem; }
         header { padding: 1rem; }
@@ -180,7 +160,7 @@
   <body>
     <div id="loading-overlay" class="loading-overlay">
       <div class="ai-spin"></div>
-      <span>Loading purchases…</span>
+      <span>Loading purchases&hellip;</span>
     </div>
 
     <div id="app">
@@ -195,14 +175,9 @@
         <div class="header-right">
           <div class="db-status">
             <div class="db-dot" id="db-dot"></div>
-            <span id="db-status-text" style="color:var(--text2);font-size:12px;">Connecting…</span>
+            <span id="db-status-text" style="color:var(--text2);font-size:12px;">Connecting&hellip;</span>
           </div>
-          <a href="/settings" class="btn btn-ghost btn-sm" title="Settings">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
-            </svg>
-            Settings
-          </a>
+          <a href="/settings" class="btn btn-ghost btn-sm">Settings</a>
         </div>
       </header>
 
@@ -229,7 +204,7 @@
               <div class="field">
                 <label>Store Name *</label>
                 <div class="combo-wrap" id="store-combo-wrap">
-                  <input type="text" id="f-store" placeholder="Type or select a store…" autocomplete="off" oninput="comboFilter('store')" onfocus="comboOpen('store')" onkeydown="comboKey(event,'store')" />
+                  <input type="text" id="f-store" placeholder="Type or select a store&hellip;" autocomplete="off" oninput="comboFilter('store')" onfocus="comboOpen('store')" onkeydown="comboKey(event,'store')" />
                   <span class="combo-arrow"><svg viewBox="0 0 12 12"><path d="M6 8L1 3h10z"/></svg></span>
                   <div class="combo-dropdown" id="store-combo-list"></div>
                 </div>
@@ -249,7 +224,7 @@
               <div class="field">
                 <label>Category</label>
                 <select id="f-category">
-                  <option value="">— select —</option>
+                  <option value="">-- select --</option>
                   <option>Office Supplies</option><option>Food</option><option>Equipment</option>
                   <option>Materials</option><option>Maintenance</option><option>Utilities</option>
                   <option>Travel</option><option>Meals</option><option>Software</option><option>Other</option>
@@ -257,7 +232,7 @@
               </div>
               <div class="field span2">
                 <label>Property Purchased For</label>
-                <select id="f-property"><option value="">— select property —</option></select>
+                <select id="f-property"><option value="">-- select property --</option></select>
               </div>
               <div class="field span2">
                 <label>Notes / Description</label>
@@ -268,10 +243,8 @@
                 <div class="upload-zone" id="drop-zone">
                   <input type="file" id="f-receipt" accept="image/*,application/pdf" capture="environment" onchange="handleFile(this.files[0])" />
                   <div class="upload-inner" id="upload-prompt">
-                    <div class="upload-icon-wrap">
-                      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                    </div>
-                    <div class="upload-text"><span>Take photo or upload</span> — image or PDF</div>
+                    <div class="upload-icon-wrap"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
+                    <div class="upload-text"><span>Take photo or upload</span> -- image or PDF</div>
                   </div>
                   <div id="upload-preview" style="display:none"></div>
                 </div>
@@ -286,7 +259,7 @@
               </button>
               <button class="btn btn-ghost" onclick="clearForm()">Clear</button>
             </div>
-            <p class="err-msg" id="form-err" style="font-size:12px;color:var(--danger);margin-top:8px;display:none"></p>
+            <p id="form-err" style="font-size:12px;color:var(--danger);margin-top:8px;display:none"></p>
           </div>
         </div>
 
@@ -312,34 +285,36 @@
               </table>
             </div>
             <div style="padding:12px 16px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-              <button class="btn btn-ghost btn-sm" onclick="multiAddRow()">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Add Row
-              </button>
+              <button class="btn btn-ghost btn-sm" onclick="multiAddRow()">+ Add Row</button>
               <span id="multi-row-count" style="font-size:12px;color:var(--text3);">1 row</span>
               <div style="margin-left:auto;display:flex;gap:8px;align-items:center;">
-                <p class="err-msg" id="multi-err" style="margin:0;display:none;font-size:12px;color:var(--danger);"></p>
+                <p id="multi-err" style="margin:0;display:none;font-size:12px;color:var(--danger);"></p>
                 <button class="btn btn-ghost btn-sm" onclick="multiClearAll()">Clear All</button>
-                <button class="btn btn-primary" id="multi-add-btn" onclick="multiAddAll()">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                  Add All Purchases
-                </button>
+                <button class="btn btn-primary" id="multi-add-btn" onclick="multiAddAll()">Add All Purchases</button>
               </div>
             </div>
           </div>
         </div>
 
+        <!-- HISTORY HEADER -->
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:12px;">
           <p class="section-title" style="margin:0">Purchase History</p>
-          <button class="btn btn-ghost btn-sm" onclick="exportCSV()">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            Export CSV
-          </button>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <label class="btn btn-ghost btn-sm" style="cursor:pointer;margin:0;" title="Import purchases from a CSV file">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 10 12 15 7 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Import CSV
+              <input type="file" id="csv-import-input" accept=".csv,text/csv" style="display:none;" onchange="handleCSVImport(this)">
+            </label>
+            <button class="btn btn-ghost btn-sm" onclick="exportCSV()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export CSV
+            </button>
+          </div>
         </div>
 
         <div class="card" style="padding:1.25rem">
           <div class="toolbar">
-            <input type="text" id="t-search" placeholder="Search store, receipt #, property, notes…" oninput="render()" />
+            <input type="text" id="t-search" placeholder="Search store, receipt #, property, notes&hellip;" oninput="render()" />
             <select id="t-cat" onchange="render()">
               <option value="">All categories</option>
               <option>Office Supplies</option><option>Equipment</option><option>Materials</option>
@@ -379,6 +354,49 @@
       </main>
     </div>
 
+    <!-- CSV IMPORT MODAL -->
+    <div class="modal-bg" id="csv-modal" onclick="closeCSVModal()">
+      <div class="modal-inner" onclick="event.stopPropagation()" style="width:min(880px,96vw);padding:1.5rem;max-height:90vh;display:flex;flex-direction:column;gap:1rem;">
+        <button class="modal-close" onclick="closeCSVModal()">&#x2715;</button>
+        <div>
+          <h2 style="font-size:16px;font-weight:600;margin-bottom:4px;">Import CSV</h2>
+          <p style="font-size:13px;color:var(--text2);">Review the rows below before importing. Error rows are highlighted and unchecked -- fix your CSV and re-import, or proceed with valid rows only.</p>
+        </div>
+        <div class="csv-hint">
+          Expected columns (flexible column order, header row required):<br>
+          <strong>Store, Receipt #, Date (YYYY-MM-DD), Amount, Category, Property, Notes</strong><br>
+          <span style="color:var(--text3)">Receipt File column is ignored on import. Categories must match exactly.</span>
+        </div>
+        <div style="overflow:auto;flex:1;border:1px solid var(--border);border-radius:6px;min-height:100px;">
+          <table style="width:100%;border-collapse:collapse;font-size:12.5px;min-width:700px;">
+            <thead>
+              <tr style="background:var(--surface2);border-bottom:1px solid var(--border);">
+                <th style="padding:8px 10px;width:34px;"><input type="checkbox" id="csv-check-all" onchange="csvToggleAll(this.checked)" style="cursor:pointer;width:14px;height:14px;"></th>
+                <th style="padding:8px 10px;">Store</th>
+                <th style="padding:8px 10px;">Receipt #</th>
+                <th style="padding:8px 10px;">Date</th>
+                <th style="padding:8px 10px;">Amount</th>
+                <th style="padding:8px 10px;">Category</th>
+                <th style="padding:8px 10px;">Property</th>
+                <th style="padding:8px 10px;">Notes</th>
+                <th style="padding:8px 10px;">Status</th>
+              </tr>
+            </thead>
+            <tbody id="csv-preview-body"></tbody>
+          </table>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+          <span id="csv-summary" style="font-size:13px;color:var(--text2);"></span>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-ghost btn-sm" onclick="closeCSVModal()">Cancel</button>
+            <button class="btn btn-primary" id="csv-import-btn" onclick="confirmCSVImport()">Import Selected</button>
+          </div>
+        </div>
+        <p id="csv-import-err" style="font-size:12px;color:var(--danger);display:none;margin:0;"></p>
+      </div>
+    </div>
+
+    <!-- RECEIPT MODAL -->
     <div class="modal-bg" id="modal" onclick="closeModal()">
       <div class="modal-inner" onclick="event.stopPropagation()">
         <button class="modal-close" onclick="closeModal()">&#x2715;</button>
@@ -388,704 +406,245 @@
     <div id="toast"></div>
 
     <script>
-      // ── SUPABASE INIT ────────────────────────────────────────────
       const SUPABASE_URL = 'https://hoouyjfsavketbdeipcb.supabase.co';
       const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhvb3V5amZzYXZrZXRiZGVpcGNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1NzQwMDIsImV4cCI6MjA5MjE1MDAwMn0.mGcba3rJFNRyQrnFrcs-KOdMP3x_2yNhmYSBx6QFhmk';
       const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
       const R2_WORKER = "https://wlgre-receipt-upload.old-math-e246.workers.dev";
+      let entries = [], editId = null, pendingReceipt = null, storeList = [], propertyList = [];
 
-      let entries = [], editId = null, pendingReceipt = null;
-      let storeList = [], propertyList = [];
-
-      // ── STATUS ───────────────────────────────────────────────────
       function setDbStatus(state, msg) {
-        const dot = document.getElementById('db-dot');
-        const txt = document.getElementById('db-status-text');
-        dot.className = 'db-dot' + (state === 'connected' ? ' connected' : state === 'error' ? ' error' : '');
+        const dot = document.getElementById('db-dot'), txt = document.getElementById('db-status-text');
+        dot.className = 'db-dot' + (state==='connected'?' connected':state==='error'?' error':'');
         txt.textContent = msg;
       }
-
-      // ── STORES ───────────────────────────────────────────────────
       async function loadStores() {
-        try {
-          const { data, error } = await sb.from('vendors').select('name').order('sort_order');
-          if (error) throw error;
-          storeList = (data || []).map(v => v.name);
-        } catch(e) {
-          storeList = ["Home Depot","Lowe's","Walmart","Sam's Club","Costco","Amazon","Ace Hardware","Harbor Freight","Tractor Supply"];
-        }
+        try { const {data,error} = await sb.from('vendors').select('name').order('sort_order'); if(error) throw error; storeList=(data||[]).map(v=>v.name); }
+        catch(e) { storeList=["Home Depot","Lowe's","Walmart","Sam's Club","Costco","Amazon","Ace Hardware","Harbor Freight","Tractor Supply"]; }
       }
       async function addStoreToList(name) {
-        const n = name.trim();
-        if (!n || storeList.some(s => s.toLowerCase() === n.toLowerCase())) return;
-        try {
-          await sb.from('vendors').insert({ name: n, sort_order: storeList.length + 1 });
-          storeList.push(n);
-          storeList.sort((a,b) => a.localeCompare(b));
-        } catch(e) { console.warn('Could not save vendor:', e.message); }
+        const n=name.trim(); if(!n||storeList.some(s=>s.toLowerCase()===n.toLowerCase())) return;
+        try { await sb.from('vendors').insert({name:n,sort_order:storeList.length+1}); storeList.push(n); storeList.sort((a,b)=>a.localeCompare(b)); }
+        catch(e) { console.warn('Could not save vendor:',e.message); }
       }
-
-      // ── PROPERTIES ───────────────────────────────────────────────
       async function loadProperties() {
-        try {
-          const { data, error } = await sb.from('purchase_properties').select('name').order('sort_order');
-          if (error) throw error;
-          propertyList = (data || []).map(p => p.name);
-        } catch(e) {
-          propertyList = ["5405","5410","5414","6216","831","833","835","837"];
-        }
+        try { const {data,error}=await sb.from('purchase_properties').select('name').order('sort_order'); if(error) throw error; propertyList=(data||[]).map(p=>p.name); }
+        catch(e) { propertyList=["5405","5410","5414","6216","831","833","835","837"]; }
       }
       function getPropertyList() { return propertyList; }
       function populatePropertyDropdown() {
-        const sel = document.getElementById("f-property");
-        sel.innerHTML = '<option value="">— select property —</option>';
-        propertyList.forEach(p => {
-          const opt = document.createElement("option");
-          opt.value = p; opt.textContent = p;
-          sel.appendChild(opt);
-        });
+        const sel=document.getElementById("f-property"); sel.innerHTML='<option value="">-- select property --</option>';
+        propertyList.forEach(p=>{const opt=document.createElement("option");opt.value=p;opt.textContent=p;sel.appendChild(opt);});
       }
-
-      // ── SUPABASE CRUD ────────────────────────────────────────────
       async function loadFromSupabase() {
         try {
-          const { data, error } = await sb.from('purchases').select('*').order('date', { ascending: false });
-          if (error) throw error;
-          entries = data.map(r => ({
-            id: r.id,
-            store: r.store_name,
-            receiptNum: r.receipt_number || '',
-            date: r.date,
-            amount: parseFloat(r.amount),
-            category: r.category || '',
-            property: r.property || '',
-            notes: r.notes || '',
-            receipt: r.receipt_path ? { key: r.receipt_path, name: r.receipt_path.split('/').pop(), type: r.receipt_path.match(/\.(jpg|jpeg|png|gif|webp)$/i) ? 'image/jpeg' : 'application/pdf' } : null,
-          }));
-          setDbStatus('connected', 'Connected');
-          document.getElementById('loading-overlay').style.display = 'none';
-          updateMetrics();
-          render();
-        } catch(e) {
-          setDbStatus('error', 'Connection error');
-          document.getElementById('loading-overlay').style.display = 'none';
-          toast('Failed to load: ' + e.message);
-        }
+          const {data,error}=await sb.from('purchases').select('*').order('date',{ascending:false}); if(error) throw error;
+          entries=data.map(r=>({id:r.id,store:r.store_name,receiptNum:r.receipt_number||'',date:r.date,amount:parseFloat(r.amount),category:r.category||'',property:r.property||'',notes:r.notes||'',receipt:r.receipt_path?{key:r.receipt_path,name:r.receipt_path.split('/').pop(),type:r.receipt_path.match(/\.(jpg|jpeg|png|gif|webp)$/i)?'image/jpeg':'application/pdf'}:null}));
+          setDbStatus('connected','Connected'); document.getElementById('loading-overlay').style.display='none'; updateMetrics(); render();
+        } catch(e) { setDbStatus('error','Connection error'); document.getElementById('loading-overlay').style.display='none'; toast('Failed to load: '+e.message); }
       }
-
       async function insertToSupabase(entry) {
-        const { data, error } = await sb.from('purchases').insert({
-          store_name: entry.store,
-          receipt_number: entry.receiptNum || null,
-          date: entry.date,
-          amount: entry.amount,
-          category: entry.category || null,
-          property: entry.property || null,
-          notes: entry.notes || null,
-          receipt_path: entry.receipt ? entry.receipt.key : null,
-        }).select().single();
-        if (error) throw error;
-        return data.id;
+        const {data,error}=await sb.from('purchases').insert({store_name:entry.store,receipt_number:entry.receiptNum||null,date:entry.date,amount:entry.amount,category:entry.category||null,property:entry.property||null,notes:entry.notes||null,receipt_path:entry.receipt?entry.receipt.key:null}).select().single();
+        if(error) throw error; return data.id;
       }
-
       async function updateInSupabase(entry) {
-        const { error } = await sb.from('purchases').update({
-          store_name: entry.store,
-          receipt_number: entry.receiptNum || null,
-          date: entry.date,
-          amount: entry.amount,
-          category: entry.category || null,
-          property: entry.property || null,
-          notes: entry.notes || null,
-          receipt_path: entry.receipt ? entry.receipt.key : null,
-        }).eq('id', entry.id);
-        if (error) throw error;
+        const {error}=await sb.from('purchases').update({store_name:entry.store,receipt_number:entry.receiptNum||null,date:entry.date,amount:entry.amount,category:entry.category||null,property:entry.property||null,notes:entry.notes||null,receipt_path:entry.receipt?entry.receipt.key:null}).eq('id',entry.id);
+        if(error) throw error;
       }
+      async function deleteFromSupabase(id) { const {error}=await sb.from('purchases').delete().eq('id',id); if(error) throw error; }
 
-      async function deleteFromSupabase(id) {
-        const { error } = await sb.from('purchases').delete().eq('id', id);
-        if (error) throw error;
-      }
+      let comboActiveIdx={store:-1};
+      function comboItems(id){const q=document.getElementById("f-"+id).value.trim().toLowerCase();const list=id==="store"?storeList:[];return q?list.filter(s=>s.toLowerCase().includes(q)):list;}
+      function comboRender(id){const el=document.getElementById(id+"-combo-list");const q=document.getElementById("f-"+id).value.trim();const items=comboItems(id);const idx=comboActiveIdx[id];if(!items.length&&!q){el.innerHTML="";el.classList.remove("open");return;}let html="";if(!items.length){html='<div class="combo-item add-new" onclick="comboAddNew(''+id+'')">+ Add "'+esc(q)+'"</div>';}else{html=items.map((s,i)=>'<div class="combo-item'+(i===idx?" active":"")+'" onclick="comboSelect(''+id+'',''+esc(s)+'')">'+esc(s)+'</div>').join('');const exactMatch=items.some(s=>s.toLowerCase()===q.toLowerCase());if(q&&!exactMatch)html+='<div class="combo-item add-new" onclick="comboAddNew(''+id+'')">+ Add "'+esc(q)+'"</div>';}el.innerHTML=html;el.classList.add("open");}
+      function comboFilter(id){comboActiveIdx[id]=-1;comboRender(id);}
+      function comboOpen(id){comboRender(id);}
+      function comboSelect(id,val){document.getElementById("f-"+id).value=val;document.getElementById(id+"-combo-list").classList.remove("open");comboActiveIdx[id]=-1;}
+      function comboAddNew(id){const val=document.getElementById("f-"+id).value.trim();if(!val)return;if(id==="store")addStoreToList(val);comboSelect(id,val);toast('"'+val+'" added to store list');}
+      function comboKey(e,id){const el=document.getElementById(id+"-combo-list");const items=comboItems(id);const total=items.length+(document.getElementById("f-"+id).value.trim()?1:0);if(!el.classList.contains("open")){if(e.key==="ArrowDown")comboOpen(id);return;}if(e.key==="ArrowDown"){e.preventDefault();comboActiveIdx[id]=Math.min(comboActiveIdx[id]+1,total-1);comboRender(id);}else if(e.key==="ArrowUp"){e.preventDefault();comboActiveIdx[id]=Math.max(comboActiveIdx[id]-1,-1);comboRender(id);}else if(e.key==="Enter"){e.preventDefault();const i=comboActiveIdx[id];if(i>=0&&i<items.length)comboSelect(id,items[i]);else if(i===items.length)comboAddNew(id);else{const v=document.getElementById("f-"+id).value.trim();if(v)comboSelect(id,v);}}else if(e.key==="Escape")el.classList.remove("open");}
+      document.addEventListener("click",e=>{["store"].forEach(id=>{const wrap=document.getElementById(id+"-combo-wrap");if(wrap&&!wrap.contains(e.target))document.getElementById(id+"-combo-list").classList.remove("open");});});
 
-      // ── COMBO ────────────────────────────────────────────────────
-      let comboActiveIdx = { store: -1 };
-      function comboItems(id) {
-        const q = document.getElementById("f-"+id).value.trim().toLowerCase();
-        const list = id === "store" ? storeList : [];
-        return q ? list.filter(s => s.toLowerCase().includes(q)) : list;
-      }
-      function comboRender(id) {
-        const el = document.getElementById(id+"-combo-list");
-        const q = document.getElementById("f-"+id).value.trim();
-        const items = comboItems(id);
-        const idx = comboActiveIdx[id];
-        if (!items.length && !q) { el.innerHTML = ""; el.classList.remove("open"); return; }
-        let html = "";
-        if (!items.length) {
-          html = '<div class="combo-item add-new" onclick="comboAddNew(\''+id+'\')">+ Add "'+esc(q)+'"</div>';
-        } else {
-          html = items.map((s,i) => '<div class="combo-item'+(i===idx?" active":"")+'" onclick="comboSelect(\''+id+'\',\''+esc(s)+'\')">'+esc(s)+'</div>').join('');
-          const exactMatch = items.some(s => s.toLowerCase() === q.toLowerCase());
-          if (q && !exactMatch) html += '<div class="combo-item add-new" onclick="comboAddNew(\''+id+'\')">+ Add "'+esc(q)+'"</div>';
-        }
-        el.innerHTML = html;
-        el.classList.add("open");
-      }
-      function comboFilter(id) { comboActiveIdx[id]=-1; comboRender(id); }
-      function comboOpen(id) { comboRender(id); }
-      function comboSelect(id, val) { document.getElementById("f-"+id).value=val; document.getElementById(id+"-combo-list").classList.remove("open"); comboActiveIdx[id]=-1; }
-      function comboAddNew(id) {
-        const val = document.getElementById("f-"+id).value.trim();
-        if (!val) return;
-        if (id === "store") addStoreToList(val);
-        comboSelect(id, val);
-        toast('"'+val+'" added to store list');
-      }
-      function comboKey(e, id) {
-        const el = document.getElementById(id+"-combo-list");
-        const items = comboItems(id);
-        const total = items.length + (document.getElementById("f-"+id).value.trim() ? 1 : 0);
-        if (!el.classList.contains("open")) { if (e.key==="ArrowDown") comboOpen(id); return; }
-        if (e.key==="ArrowDown") { e.preventDefault(); comboActiveIdx[id]=Math.min(comboActiveIdx[id]+1,total-1); comboRender(id); }
-        else if (e.key==="ArrowUp") { e.preventDefault(); comboActiveIdx[id]=Math.max(comboActiveIdx[id]-1,-1); comboRender(id); }
-        else if (e.key==="Enter") { e.preventDefault(); const i=comboActiveIdx[id]; if (i>=0&&i<items.length) comboSelect(id,items[i]); else if (i===items.length) comboAddNew(id); else { const v=document.getElementById("f-"+id).value.trim(); if (v) comboSelect(id,v); } }
-        else if (e.key==="Escape") el.classList.remove("open");
-      }
-      document.addEventListener("click", e => {
-        ["store"].forEach(id => {
-          const wrap = document.getElementById(id+"-combo-wrap");
-          if (wrap && !wrap.contains(e.target)) document.getElementById(id+"-combo-list").classList.remove("open");
-        });
-      });
+      window.addEventListener("DOMContentLoaded",()=>{const dz=document.getElementById("drop-zone");if(!dz)return;dz.addEventListener("dragover",e=>{e.preventDefault();dz.classList.add("drag");});dz.addEventListener("dragleave",()=>dz.classList.remove("drag"));dz.addEventListener("drop",e=>{e.preventDefault();dz.classList.remove("drag");if(e.dataTransfer.files[0])handleFile(e.dataTransfer.files[0]);});document.getElementById("f-date").value=todayStr();});
 
-      // ── FILE UPLOAD ──────────────────────────────────────────────
-      window.addEventListener("DOMContentLoaded", () => {
-        const dz = document.getElementById("drop-zone");
-        if (!dz) return;
-        dz.addEventListener("dragover", e => { e.preventDefault(); dz.classList.add("drag"); });
-        dz.addEventListener("dragleave", () => dz.classList.remove("drag"));
-        dz.addEventListener("drop", e => { e.preventDefault(); dz.classList.remove("drag"); if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]); });
-        document.getElementById("f-date").value = todayStr();
-      });
+      async function handleFile(file){if(!file)return;const statusEl=document.getElementById("upload-status"),scanBar=document.getElementById("ai-scan-bar");statusEl.style.display="block";statusEl.textContent="Uploading...";scanBar.style.display="none";const isImage=file.type.startsWith("image/");let base64Data=null;if(isImage){base64Data=await new Promise(resolve=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result.split(",")[1]);reader.onerror=()=>resolve(null);reader.readAsDataURL(file);});}try{const fd=new FormData();fd.append("file",file);const res=await fetch(R2_WORKER+"/upload",{method:"POST",body:fd});const data=await res.json();if(!res.ok||!data.key)throw new Error(data.error||"Upload failed");pendingReceipt={key:data.key,name:file.name,type:file.type};statusEl.textContent="Uploaded";showUploadPreview(pendingReceipt);if(isImage&&base64Data)scanReceiptWithAI(base64Data,file.type);}catch(e){statusEl.textContent="Upload failed: "+e.message;document.getElementById("f-receipt").value="";}}
 
-      async function handleFile(file) {
+      async function scanReceiptWithAI(base64Data,mimeType){const scanBar=document.getElementById("ai-scan-bar");scanBar.style.display="flex";scanBar.className="ai-scan-bar";scanBar.innerHTML='<div class="ai-spin"></div><span>Scanning receipt with AI...</span>';const VALID_CATEGORIES=["Office Supplies","Equipment","Materials","Maintenance","Utilities","Travel","Meals","Software","Other","Food"];const today=todayStr();try{const response=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:[{type:"image",source:{type:"base64",media_type:mimeType,data:base64Data}},{type:"text",text:'You are a receipt data extractor. Analyze this receipt image and extract the following fields. Respond ONLY with a valid JSON object -- no markdown, no extra text.
+
+Fields to extract:
+- store: string
+- date: string YYYY-MM-DD (use "'+today+'" if not found)
+- amount: number (final total, no $ sign)
+- receiptNum: string (or "")
+- category: string from: '+VALID_CATEGORIES.join(", ")+'
+- notes: string (brief 1-sentence description)
+
+JSON format:
+{"store":"","date":"","amount":0,"receiptNum":"","category":"","notes":""}'}]}]})});const result=await response.json();if(!response.ok)throw new Error(result.error?.message||"API error");const text=result.content?.find(b=>b.type==="text")?.text||"";const parsed=JSON.parse(text.replace(/```json|```/g,"").trim());const filled=[];function autofill(fieldId,value,label){if(!value&&value!==0)return;const el=document.getElementById(fieldId);if(!el)return;const current=el.value.trim();if(current&&current!=="0"&&current!==todayStr())return;el.value=value;const field=el.closest(".field");if(field){field.classList.add("field-autofilled");setTimeout(()=>field.classList.remove("field-autofilled"),3000);}filled.push(label);}if(parsed.store){const storeEl=document.getElementById("f-store");if(!storeEl.value.trim()){storeEl.value=parsed.store;const field=storeEl.closest(".field");if(field){field.classList.add("field-autofilled");setTimeout(()=>field.classList.remove("field-autofilled"),3000);}filled.push("Store");}}autofill("f-date",parsed.date,"Date");autofill("f-amount",parsed.amount,"Amount");autofill("f-receiptnum",parsed.receiptNum,"Receipt #");if(parsed.notes)autofill("f-notes",parsed.notes,"Notes");if(parsed.category&&VALID_CATEGORIES.includes(parsed.category)){const catEl=document.getElementById("f-category");if(!catEl.value){catEl.value=parsed.category;const field=catEl.closest(".field");if(field){field.classList.add("field-autofilled");setTimeout(()=>field.classList.remove("field-autofilled"),3000);}filled.push("Category");}}scanBar.className="ai-scan-bar done";scanBar.innerHTML=filled.length>0?`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>AI filled: ${filled.join(", ")} -- review before saving</span>`:`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Receipt scanned -- fields already filled or not readable</span>`;setTimeout(()=>{scanBar.style.display="none";},5000);}catch(e){scanBar.className="ai-scan-bar error";scanBar.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>AI scan failed -- fill in manually</span>';setTimeout(()=>{scanBar.style.display="none";},4000);}}
+
+      function showUploadPreview(rc){document.getElementById("upload-prompt").style.display="none";const p=document.getElementById("upload-preview");p.style.display="block";const isImg=rc.type&&rc.type.startsWith("image/");p.innerHTML='<div class="receipt-preview-wrap">'+(isImg?'<div class="receipt-pdf-thumb" style="background:var(--accent-light);color:var(--accent-text)"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>IMG</div>':'<div class="receipt-pdf-thumb"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>PDF</div>')+'<div class="receipt-info"><div class="receipt-name">'+esc(rc.name)+'</div><div class="receipt-sub">Saved to cloud</div><button class="receipt-rm" onclick="clearReceipt()">Remove</button></div></div>';}
+      function clearReceipt(){pendingReceipt=null;document.getElementById("upload-prompt").style.display="flex";document.getElementById("upload-preview").style.display="none";document.getElementById("upload-preview").innerHTML="";document.getElementById("upload-status").style.display="none";document.getElementById("f-receipt").value="";}
+
+      async function addEntry(){const store=document.getElementById("f-store").value.trim();const date=document.getElementById("f-date").value;const amt=parseFloat(document.getElementById("f-amount").value);const errEl=document.getElementById("form-err");if(!store){errEl.textContent="Store name is required.";errEl.style.display="block";return;}if(!date){errEl.textContent="Date is required.";errEl.style.display="block";return;}if(isNaN(amt)||amt<0){errEl.textContent="Please enter a valid amount.";errEl.style.display="block";return;}errEl.style.display="none";const btn=document.getElementById("add-btn");btn.disabled=true;btn.textContent="Saving...";try{addStoreToList(store);const entry={store,date,amount:amt,receiptNum:document.getElementById("f-receiptnum").value.trim(),category:document.getElementById("f-category").value,property:document.getElementById("f-property").value,notes:document.getElementById("f-notes").value.trim(),receipt:pendingReceipt?{key:pendingReceipt.key,name:pendingReceipt.name,type:pendingReceipt.type}:null};const newId=await insertToSupabase(entry);entry.id=newId;entries.unshift(entry);clearForm();updateMetrics();render();const card=btn.closest(".card");btn.classList.add("success");btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Added!';card.classList.add("flash-success");card.addEventListener("animationend",()=>card.classList.remove("flash-success"),{once:true});setTimeout(()=>{btn.classList.remove("success");btn.disabled=false;btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Purchase';},2000);}catch(e){toast("Save failed: "+e.message);btn.disabled=false;btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Purchase';}}
+
+      function clearForm(){document.getElementById("f-store").value="";document.getElementById("f-receiptnum").value="";document.getElementById("f-property").value="";document.getElementById("f-notes").value="";document.getElementById("f-amount").value="";document.getElementById("f-category").value="";document.getElementById("f-date").value=todayStr();clearReceipt();document.getElementById("form-err").style.display="none";}
+      async function deleteEntry(id){if(!confirm("Delete this purchase?"))return;try{await deleteFromSupabase(id);entries=entries.filter(e=>e.id!==id);updateMetrics();render();toast("Purchase deleted");}catch(e){toast("Delete failed: "+e.message);}}
+      function startEdit(id){editId=id;render();}
+      function cancelEdit(){editId=null;delete window._editReceipt;render();}
+      async function saveEdit(id){const store=document.getElementById("e-store-"+id).value.trim();const date=document.getElementById("e-date-"+id).value;const amt=parseFloat(document.getElementById("e-amount-"+id).value);if(!store||!date||isNaN(amt))return;const i=entries.findIndex(e=>e.id===id);const receipt=window._editReceipt!==undefined?window._editReceipt:entries[i].receipt;const updated={...entries[i],store,date,amount:amt,receipt,receiptNum:document.getElementById("e-receiptnum-"+id).value.trim(),category:document.getElementById("e-category-"+id).value,property:document.getElementById("e-property-"+id).value,notes:document.getElementById("e-notes-"+id).value.trim()};try{await updateInSupabase(updated);entries[i]=updated;delete window._editReceipt;editId=null;updateMetrics();render();toast("Purchase updated");}catch(e){toast("Update failed: "+e.message);}}
+      async function handleEditFile(file){if(!file)return;try{const fd=new FormData();fd.append("file",file);const res=await fetch(R2_WORKER+"/upload",{method:"POST",body:fd});const data=await res.json();if(!res.ok||!data.key)throw new Error(data.error||"Upload failed");window._editReceipt={key:data.key,name:file.name,type:file.type};const el=document.getElementById("edit-rcpt-preview");if(el)el.innerHTML=thumbHTML(window._editReceipt);toast("Receipt uploaded");}catch(e){toast("Upload failed: "+e.message);}}
+      function clearEditReceipt(){window._editReceipt=null;const el=document.getElementById("edit-rcpt-preview");if(el)el.innerHTML=noThumb();}
+
+      function thumbHTML(rc){if(!rc)return noThumb();const isImg=rc.type&&rc.type.startsWith("image/");const clickHandler=rc.key?(isImg?`onclick="openR2Modal('${esc(rc.key)}')"` :`onclick="openR2PDF('${esc(rc.key)}')"`):(isImg?`onclick="openModal('${rc.data||''}')"` :`onclick="openPDF('${rc.data||''}')"` );if(isImg)return `<img class="tbl-thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Crect width='44' height='44' rx='6' fill='%23e8f2ed'/%3E%3Ctext x='22' y='28' text-anchor='middle' font-size='18'%3E🧾%3C/text%3E%3C/svg%3E" ${clickHandler} alt="receipt" title="${esc(rc.name||'Receipt')}">`;return `<div class="tbl-pdf" ${clickHandler}><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>PDF</div>`;}
+      async function openR2Modal(key){try{const res=await fetch(R2_WORKER+"/sign?key="+encodeURIComponent(key));const data=await res.json();if(data.url)openModal(data.url);else toast("Could not load receipt");}catch{toast("Could not load receipt");}}
+      async function openR2PDF(key){try{const res=await fetch(R2_WORKER+"/sign?key="+encodeURIComponent(key));const data=await res.json();if(data.url)window.open(data.url,"_blank");else toast("Could not open PDF");}catch{toast("Could not open PDF");}}
+      function noThumb(){return '<div class="tbl-none"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>';}
+      function openModal(src){document.getElementById("modal-img").src=src;document.getElementById("modal").classList.add("open");}
+      function openPDF(src){window.open(src,"_blank");}
+      function closeModal(){document.getElementById("modal").classList.remove("open");}
+
+      function updateMetrics(){const total=entries.reduce((s,e)=>s+e.amount,0);document.getElementById("m-total").textContent="$"+total.toFixed(2);document.getElementById("m-count").textContent=entries.length;const ym=new Date().toISOString().slice(0,7);const mTotal=entries.filter(e=>e.date.startsWith(ym)).reduce((s,e)=>s+e.amount,0);document.getElementById("m-month").textContent="$"+mTotal.toFixed(2);document.getElementById("m-avg").textContent=entries.length?"$"+(total/entries.length).toFixed(2):"$0.00";}
+
+      const catColors={"Office Supplies":{bg:"#EBF3FF",text:"#1a4a8a"},Equipment:{bg:"#F0EEFF",text:"#3d2d9e"},Materials:{bg:"#E8F7F0",text:"#1a5c3e"},Maintenance:{bg:"#FEF6E4",text:"#7a4a0a"},Utilities:{bg:"#FFF0E8",text:"#8a3010"},Travel:{bg:"#FEE8F4",text:"#7a1a50"},Meals:{bg:"#EDFAEE",text:"#1a6020"},Software:{bg:"#E6F4FF",text:"#0a4878"},Other:{bg:"#F0EDE8",text:"#5a5550"}};
+      function filtered(){const q=document.getElementById("t-search").value.toLowerCase();const cat=document.getElementById("t-cat").value;const sort=document.getElementById("t-sort").value;let res=entries.filter(e=>(!q||(e.store+(e.receiptNum||"")+(e.property||"")+(e.notes||"")+(e.category||"")).toLowerCase().includes(q))&&(!cat||e.category===cat));if(sort==="date-desc")res.sort((a,b)=>b.date.localeCompare(a.date));else if(sort==="date-asc")res.sort((a,b)=>a.date.localeCompare(b.date));else if(sort==="amount-desc")res.sort((a,b)=>b.amount-a.amount);else res.sort((a,b)=>a.amount-b.amount);return res;}
+      function fmtDate(d){if(!d)return "";const[y,m,day]=d.split("-");return m+"/"+day+"/"+y;}
+      function catOpts(sel){return["Office Supplies","Equipment","Materials","Maintenance","Utilities","Travel","Meals","Software","Other"].map(c=>'<option value="'+c+'"'+(sel===c?" selected":"")+">"+c+"</option>").join("");}
+      function propOpts(sel){return getPropertyList().map(p=>'<option value="'+esc(p)+'"'+(sel===p?" selected":"")+">"+esc(p)+"</option>").join("");}
+      function esc(s){return(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+      function render(){const rows=filtered();const body=document.getElementById("tbl-body");const empty=document.getElementById("tbl-empty");if(!rows.length){body.innerHTML="";empty.style.display="block";return;}empty.style.display="none";body.innerHTML=rows.map(e=>{const col=catColors[e.category]||{bg:"#F0EDE8",text:"#5a5550"};const badge=e.category?'<span class="badge" style="background:'+col.bg+';color:'+col.text+'">'+esc(e.category)+'</span>':"";const rcptNumDisplay=e.receiptNum?'<span class="rcpt-num">'+esc(e.receiptNum)+'</span>':'<span style="color:var(--text3)">--</span>';if(editId===e.id){const cur=window._editReceipt!==undefined?window._editReceipt:e.receipt;return "<tr>"+'<td class="edit-td"><div id="edit-rcpt-preview">'+thumbHTML(cur)+'</div><div style="margin-top:6px;display:flex;flex-direction:column;gap:4px"><input type="file" accept="image/*,application/pdf" capture="environment" onchange="handleEditFile(this.files[0])" style="font-size:11px;padding:3px 0;border:none;box-shadow:none">'+((e.receipt||window._editReceipt)?'<button onclick="clearEditReceipt()" class="btn btn-ghost btn-sm" style="font-size:10px;padding:3px 8px;color:var(--danger)">Remove</button>':"")+"</div></td>"+'<td class="edit-td"><input id="e-store-'+e.id+'" type="text" value="'+esc(e.store)+'"></td>'+'<td class="edit-td"><input id="e-receiptnum-'+e.id+'" type="text" value="'+esc(e.receiptNum||"")+'" placeholder="Receipt #"></td>'+'<td class="edit-td"><input id="e-date-'+e.id+'" type="date" value="'+e.date+'"></td>'+'<td class="edit-td"><input id="e-amount-'+e.id+'" type="number" value="'+e.amount+'" step="0.01"></td>'+'<td class="edit-td"><select id="e-category-'+e.id+'"><option value=""></option>'+catOpts(e.category)+"</select></td>"+'<td class="edit-td"><select id="e-property-'+e.id+'"><option value="">-- select --</option>'+propOpts(e.property||"")+"</select></td>"+'<td class="edit-td"><textarea id="e-notes-'+e.id+'">'+esc(e.notes||"")+"</textarea></td>"+'<td><div class="act-wrap"><button class="btn btn-primary btn-sm" onclick="saveEdit(''+e.id+'')">Save</button><button class="btn btn-ghost btn-sm" onclick="cancelEdit()">Cancel</button></div></td>'+"</tr>";}return "<tr>"+"<td>"+thumbHTML(e.receipt)+"</td>"+'<td style="font-weight:500">'+esc(e.store)+"</td>"+"<td>"+rcptNumDisplay+"</td>"+'<td style="color:var(--text2);font-family:\'DM Mono\',monospace;font-size:12px">'+fmtDate(e.date)+"</td>"+'<td style="font-weight:600;font-family:\'DM Mono\',monospace">$'+e.amount.toFixed(2)+"</td>"+"<td>"+badge+"</td>"+'<td style="color:var(--text2)">'+(esc(e.property)||"--")+"</td>"+'<td style="color:var(--text2)">'+esc(e.notes||"")+"</td>"+'<td><div class="act-wrap"><button class="btn btn-ghost btn-sm" onclick="startEdit(''+e.id+'')">Edit</button><button class="btn btn-danger btn-sm" onclick="deleteEntry(''+e.id+'')">Del</button></div></td>'+"</tr>";}).join("");}
+
+      function exportCSV(){if(!entries.length)return;const head=["Store","Receipt #","Date","Amount","Category","Property","Notes","Receipt File"];const rows=entries.map(e=>[e.store,e.receiptNum||"",e.date,e.amount.toFixed(2),e.category||"",e.property||"",e.notes||"",e.receipt?e.receipt.name:""].map(v=>'"'+(v||"").replace(/"/g,'""')+'"').join(","));const a=document.createElement("a");a.href="data:text/csv;charset=utf-8,"+encodeURIComponent([head.join(","),...rows].join("\n"));a.download="purchases.csv";a.click();}
+
+      // ── CSV IMPORT ───────────────────────────────────────────────
+      let csvParsedRows = [];
+      const VALID_CATS = ["Office Supplies","Food","Equipment","Materials","Maintenance","Utilities","Travel","Meals","Software","Other"];
+
+      function handleCSVImport(input) {
+        const file = input.files[0];
         if (!file) return;
-        const statusEl = document.getElementById("upload-status");
-        const scanBar = document.getElementById("ai-scan-bar");
-        statusEl.style.display = "block";
-        statusEl.textContent = "Uploading…";
-        scanBar.style.display = "none";
-        const isImage = file.type.startsWith("image/");
-        let base64Data = null;
-        if (isImage) {
-          base64Data = await new Promise(resolve => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result.split(",")[1]);
-            reader.onerror = () => resolve(null);
-            reader.readAsDataURL(file);
-          });
+        input.value = "";
+        const reader = new FileReader();
+        reader.onload = e => parseAndPreviewCSV(e.target.result);
+        reader.readAsText(file);
+      }
+
+      function parseCSVLine(line) {
+        const result = []; let cur = "", inQ = false;
+        for (let i = 0; i < line.length; i++) {
+          const ch = line[i];
+          if (ch === '"') { if (inQ && line[i+1] === '"') { cur += '"'; i++; } else inQ = !inQ; }
+          else if (ch === ',' && !inQ) { result.push(cur); cur = ""; }
+          else cur += ch;
         }
-        try {
-          const fd = new FormData();
-          fd.append("file", file);
-          const res = await fetch(R2_WORKER+"/upload", { method:"POST", body:fd });
-          const data = await res.json();
-          if (!res.ok || !data.key) throw new Error(data.error || "Upload failed");
-          pendingReceipt = { key: data.key, name: file.name, type: file.type };
-          statusEl.textContent = "Uploaded ✓";
-          showUploadPreview(pendingReceipt);
-          if (isImage && base64Data) scanReceiptWithAI(base64Data, file.type);
-        } catch(e) {
-          statusEl.textContent = "Upload failed: " + e.message;
-          document.getElementById("f-receipt").value = "";
-        }
+        result.push(cur); return result;
       }
 
-      async function scanReceiptWithAI(base64Data, mimeType) {
-        const scanBar = document.getElementById("ai-scan-bar");
-        scanBar.style.display = "flex";
-        scanBar.className = "ai-scan-bar";
-        scanBar.innerHTML = '<div class="ai-spin"></div><span>Scanning receipt with AI…</span>';
-        const VALID_CATEGORIES = ["Office Supplies","Equipment","Materials","Maintenance","Utilities","Travel","Meals","Software","Other","Food"];
-        const today = todayStr();
-        try {
-          const response = await fetch("https://api.anthropic.com/v1/messages", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              model: "claude-sonnet-4-20250514",
-              max_tokens: 1000,
-              messages: [{ role: "user", content: [
-                { type: "image", source: { type: "base64", media_type: mimeType, data: base64Data } },
-                { type: "text", text: `You are a receipt data extractor. Analyze this receipt image and extract the following fields. Respond ONLY with a valid JSON object — no markdown, no extra text.\n\nFields to extract:\n- store: string\n- date: string YYYY-MM-DD (use "${today}" if not found)\n- amount: number (final total, no $ sign)\n- receiptNum: string (or "")\n- category: string from: ${VALID_CATEGORIES.join(", ")}\n- notes: string (brief 1-sentence description)\n\nJSON format:\n{"store":"","date":"","amount":0,"receiptNum":"","category":"","notes":""}` }
-              ]}]
-            })
-          });
-          const result = await response.json();
-          if (!response.ok) throw new Error(result.error?.message || "API error");
-          const text = result.content?.find(b => b.type==="text")?.text || "";
-          const parsed = JSON.parse(text.replace(/```json|```/g,"").trim());
-          const filled = [];
-          function autofill(fieldId, value, label) {
-            if (!value && value !== 0) return;
-            const el = document.getElementById(fieldId);
-            if (!el) return;
-            const current = el.value.trim();
-            if (current && current !== "0" && current !== todayStr()) return;
-            el.value = value;
-            const field = el.closest(".field");
-            if (field) { field.classList.add("field-autofilled"); setTimeout(() => field.classList.remove("field-autofilled"), 3000); }
-            filled.push(label);
-          }
-          if (parsed.store) {
-            const storeEl = document.getElementById("f-store");
-            if (!storeEl.value.trim()) {
-              storeEl.value = parsed.store;
-              const field = storeEl.closest(".field");
-              if (field) { field.classList.add("field-autofilled"); setTimeout(() => field.classList.remove("field-autofilled"), 3000); }
-              filled.push("Store");
-            }
-          }
-          autofill("f-date", parsed.date, "Date");
-          autofill("f-amount", parsed.amount, "Amount");
-          autofill("f-receiptnum", parsed.receiptNum, "Receipt #");
-          if (parsed.notes) autofill("f-notes", parsed.notes, "Notes");
-          if (parsed.category && VALID_CATEGORIES.includes(parsed.category)) {
-            const catEl = document.getElementById("f-category");
-            if (!catEl.value) {
-              catEl.value = parsed.category;
-              const field = catEl.closest(".field");
-              if (field) { field.classList.add("field-autofilled"); setTimeout(() => field.classList.remove("field-autofilled"), 3000); }
-              filled.push("Category");
-            }
-          }
-          scanBar.className = "ai-scan-bar done";
-          scanBar.innerHTML = filled.length > 0
-            ? `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>AI filled: ${filled.join(", ")} — review before saving</span>`
-            : `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Receipt scanned — fields already filled or not readable</span>`;
-          setTimeout(() => { scanBar.style.display = "none"; }, 5000);
-        } catch(e) {
-          scanBar.className = "ai-scan-bar error";
-          scanBar.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>AI scan failed — fill in manually</span>`;
-          setTimeout(() => { scanBar.style.display = "none"; }, 4000);
-        }
+      function findCol(header, candidates) {
+        for (const c of candidates) { const idx = header.findIndex(h => h.includes(c)); if (idx >= 0) return idx; }
+        return -1;
       }
 
-      function showUploadPreview(rc) {
-        document.getElementById("upload-prompt").style.display = "none";
-        const p = document.getElementById("upload-preview");
-        p.style.display = "block";
-        const isImg = rc.type && rc.type.startsWith("image/");
-        p.innerHTML = '<div class="receipt-preview-wrap">'
-          + (isImg
-            ? '<div class="receipt-pdf-thumb" style="background:var(--accent-light);color:var(--accent-text)"><svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>IMG</div>'
-            : '<div class="receipt-pdf-thumb"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>PDF</div>')
-          + '<div class="receipt-info"><div class="receipt-name">'+esc(rc.name)+'</div><div class="receipt-sub">Saved to cloud</div><button class="receipt-rm" onclick="clearReceipt()">Remove</button></div>'
-          + '</div>';
-      }
-      function clearReceipt() {
-        pendingReceipt = null;
-        document.getElementById("upload-prompt").style.display = "flex";
-        document.getElementById("upload-preview").style.display = "none";
-        document.getElementById("upload-preview").innerHTML = "";
-        document.getElementById("upload-status").style.display = "none";
-        document.getElementById("f-receipt").value = "";
-      }
-
-      // ── ADD ENTRY ────────────────────────────────────────────────
-      async function addEntry() {
-        const store = document.getElementById("f-store").value.trim();
-        const date = document.getElementById("f-date").value;
-        const amt = parseFloat(document.getElementById("f-amount").value);
-        const errEl = document.getElementById("form-err");
-        if (!store) { errEl.textContent = "Store name is required."; errEl.style.display = "block"; return; }
-        if (!date) { errEl.textContent = "Date is required."; errEl.style.display = "block"; return; }
-        if (isNaN(amt) || amt < 0) { errEl.textContent = "Please enter a valid amount."; errEl.style.display = "block"; return; }
-        errEl.style.display = "none";
-        const btn = document.getElementById("add-btn");
-        btn.disabled = true;
-        btn.textContent = "Saving…";
-        try {
-          addStoreToList(store);
-          const entry = {
-            store, date, amount: amt,
-            receiptNum: document.getElementById("f-receiptnum").value.trim(),
-            category: document.getElementById("f-category").value,
-            property: document.getElementById("f-property").value,
-            notes: document.getElementById("f-notes").value.trim(),
-            receipt: pendingReceipt ? { key: pendingReceipt.key, name: pendingReceipt.name, type: pendingReceipt.type } : null,
-          };
-          const newId = await insertToSupabase(entry);
-          entry.id = newId;
-          entries.unshift(entry);
-          clearForm();
-          updateMetrics();
-          render();
-          const card = btn.closest(".card");
-          btn.classList.add("success");
-          btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Added!`;
-          card.classList.add("flash-success");
-          card.addEventListener("animationend", () => card.classList.remove("flash-success"), { once: true });
-          setTimeout(() => {
-            btn.classList.remove("success");
-            btn.disabled = false;
-            btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Purchase`;
-          }, 2000);
-        } catch(e) {
-          toast("Save failed: " + e.message);
-          btn.disabled = false;
-          btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Purchase`;
-        }
-      }
-
-      function clearForm() {
-        document.getElementById("f-store").value = "";
-        document.getElementById("f-receiptnum").value = "";
-        document.getElementById("f-property").value = "";
-        document.getElementById("f-notes").value = "";
-        document.getElementById("f-amount").value = "";
-        document.getElementById("f-category").value = "";
-        document.getElementById("f-date").value = todayStr();
-        clearReceipt();
-        document.getElementById("form-err").style.display = "none";
-      }
-
-      async function deleteEntry(id) {
-        if (!confirm("Delete this purchase?")) return;
-        try {
-          await deleteFromSupabase(id);
-          entries = entries.filter(e => e.id !== id);
-          updateMetrics();
-          render();
-          toast("Purchase deleted");
-        } catch(e) {
-          toast("Delete failed: " + e.message);
-        }
-      }
-
-      function startEdit(id) { editId = id; render(); }
-      function cancelEdit() { editId = null; delete window._editReceipt; render(); }
-
-      async function saveEdit(id) {
-        const store = document.getElementById("e-store-"+id).value.trim();
-        const date = document.getElementById("e-date-"+id).value;
-        const amt = parseFloat(document.getElementById("e-amount-"+id).value);
-        if (!store || !date || isNaN(amt)) return;
-        const i = entries.findIndex(e => e.id === id);
-        const receipt = window._editReceipt !== undefined ? window._editReceipt : entries[i].receipt;
-        const updated = {
-          ...entries[i], store, date, amount: amt, receipt,
-          receiptNum: document.getElementById("e-receiptnum-"+id).value.trim(),
-          category: document.getElementById("e-category-"+id).value,
-          property: document.getElementById("e-property-"+id).value,
-          notes: document.getElementById("e-notes-"+id).value.trim(),
+      function parseAndPreviewCSV(text) {
+        const lines = text.replace(/\r\n/g,"\n").replace(/\r/g,"\n").split("\n").filter(l => l.trim());
+        if (lines.length < 2) { toast("CSV must have a header row and at least one data row."); return; }
+        const header = parseCSVLine(lines[0]).map(h => h.trim().toLowerCase().replace(/[^a-z0-9]+/g,""));
+        const colMap = {
+          store:      findCol(header, ["store","storename","vendor","merchant"]),
+          receiptNum: findCol(header, ["receipt","receiptnumber","receiptnum","receiptno","rcpt"]),
+          date:       findCol(header, ["date","purchasedate","transactiondate"]),
+          amount:     findCol(header, ["amount","total","cost","price","subtotal"]),
+          category:   findCol(header, ["category","cat","type"]),
+          property:   findCol(header, ["property","propertyfor","propfor","location"]),
+          notes:      findCol(header, ["notes","description","note","memo","details"]),
         };
-        try {
-          await updateInSupabase(updated);
-          entries[i] = updated;
-          delete window._editReceipt;
-          editId = null;
-          updateMetrics();
-          render();
-          toast("Purchase updated");
-        } catch(e) {
-          toast("Update failed: " + e.message);
+        csvParsedRows = [];
+        for (let i = 1; i < lines.length; i++) {
+          if (!lines[i].trim()) continue;
+          const cols = parseCSVLine(lines[i]);
+          const get = key => colMap[key] >= 0 ? (cols[colMap[key]] || "").trim() : "";
+          const store = get("store"), date = get("date"), amtRaw = get("amount").replace(/[$,]/g,"");
+          const amount = parseFloat(amtRaw), category = get("category");
+          const errors = [];
+          if (!store) errors.push("Store required");
+          if (!date) errors.push("Date required");
+          else if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) errors.push("Date must be YYYY-MM-DD");
+          if (isNaN(amount) || amount < 0) errors.push("Invalid amount");
+          if (category && !VALID_CATS.includes(category)) errors.push("Unknown category");
+          csvParsedRows.push({ rowNum:i, store, receiptNum:get("receiptNum"), date, amount:isNaN(amount)?0:amount, category:VALID_CATS.includes(category)?category:"", property:get("property"), notes:get("notes"), errors, checked:errors.length===0 });
         }
+        renderCSVPreview();
+        document.getElementById("csv-modal").classList.add("open");
       }
 
-      async function handleEditFile(file) {
-        if (!file) return;
-        try {
-          const fd = new FormData();
-          fd.append("file", file);
-          const res = await fetch(R2_WORKER+"/upload", { method:"POST", body:fd });
-          const data = await res.json();
-          if (!res.ok || !data.key) throw new Error(data.error || "Upload failed");
-          window._editReceipt = { key: data.key, name: file.name, type: file.type };
-          const el = document.getElementById("edit-rcpt-preview");
-          if (el) el.innerHTML = thumbHTML(window._editReceipt);
-          toast("Receipt uploaded ✓");
-        } catch(e) { toast("Upload failed: " + e.message); }
-      }
-      function clearEditReceipt() {
-        window._editReceipt = null;
-        const el = document.getElementById("edit-rcpt-preview");
-        if (el) el.innerHTML = noThumb();
-      }
-
-      // ── RECEIPT DISPLAY ──────────────────────────────────────────
-      function thumbHTML(rc) {
-        if (!rc) return noThumb();
-        const isImg = rc.type && rc.type.startsWith("image/");
-        const clickHandler = rc.key
-          ? (isImg ? `onclick="openR2Modal('${esc(rc.key)}')"` : `onclick="openR2PDF('${esc(rc.key)}')"`)
-          : (isImg ? `onclick="openModal('${rc.data||''}')"` : `onclick="openPDF('${rc.data||''}')"` );
-        if (isImg) return `<img class="tbl-thumb" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44'%3E%3Crect width='44' height='44' rx='6' fill='%23e8f2ed'/%3E%3Ctext x='22' y='28' text-anchor='middle' font-size='18'%3E🧾%3C/text%3E%3C/svg%3E" ${clickHandler} alt="receipt" title="${esc(rc.name||'Receipt')}">`;
-        return `<div class="tbl-pdf" ${clickHandler}><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>PDF</div>`;
-      }
-      async function openR2Modal(key) {
-        try {
-          const res = await fetch(R2_WORKER+"/sign?key="+encodeURIComponent(key));
-          const data = await res.json();
-          if (data.url) openModal(data.url); else toast("Could not load receipt");
-        } catch { toast("Could not load receipt"); }
-      }
-      async function openR2PDF(key) {
-        try {
-          const res = await fetch(R2_WORKER+"/sign?key="+encodeURIComponent(key));
-          const data = await res.json();
-          if (data.url) window.open(data.url,"_blank"); else toast("Could not open PDF");
-        } catch { toast("Could not open PDF"); }
-      }
-      function noThumb() { return '<div class="tbl-none"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>'; }
-      function openModal(src) { document.getElementById("modal-img").src=src; document.getElementById("modal").classList.add("open"); }
-      function openPDF(src) { window.open(src,"_blank"); }
-      function closeModal() { document.getElementById("modal").classList.remove("open"); }
-
-      // ── METRICS ──────────────────────────────────────────────────
-      function updateMetrics() {
-        const total = entries.reduce((s,e) => s+e.amount, 0);
-        document.getElementById("m-total").textContent = "$"+total.toFixed(2);
-        document.getElementById("m-count").textContent = entries.length;
-        const ym = new Date().toISOString().slice(0,7);
-        const mTotal = entries.filter(e => e.date.startsWith(ym)).reduce((s,e) => s+e.amount, 0);
-        document.getElementById("m-month").textContent = "$"+mTotal.toFixed(2);
-        document.getElementById("m-avg").textContent = entries.length ? "$"+(total/entries.length).toFixed(2) : "$0.00";
-      }
-
-      // ── RENDER ───────────────────────────────────────────────────
-      const catColors = {
-        "Office Supplies":{bg:"#EBF3FF",text:"#1a4a8a"}, Equipment:{bg:"#F0EEFF",text:"#3d2d9e"},
-        Materials:{bg:"#E8F7F0",text:"#1a5c3e"}, Maintenance:{bg:"#FEF6E4",text:"#7a4a0a"},
-        Utilities:{bg:"#FFF0E8",text:"#8a3010"}, Travel:{bg:"#FEE8F4",text:"#7a1a50"},
-        Meals:{bg:"#EDFAEE",text:"#1a6020"}, Software:{bg:"#E6F4FF",text:"#0a4878"},
-        Other:{bg:"#F0EDE8",text:"#5a5550"},
-      };
-      function filtered() {
-        const q = document.getElementById("t-search").value.toLowerCase();
-        const cat = document.getElementById("t-cat").value;
-        const sort = document.getElementById("t-sort").value;
-        let res = entries.filter(e =>
-          (!q || (e.store+(e.receiptNum||"")+(e.property||"")+(e.notes||"")+(e.category||"")).toLowerCase().includes(q)) &&
-          (!cat || e.category === cat)
-        );
-        if (sort==="date-desc") res.sort((a,b) => b.date.localeCompare(a.date));
-        else if (sort==="date-asc") res.sort((a,b) => a.date.localeCompare(b.date));
-        else if (sort==="amount-desc") res.sort((a,b) => b.amount-a.amount);
-        else res.sort((a,b) => a.amount-b.amount);
-        return res;
-      }
-      function fmtDate(d) { if (!d) return ""; const [y,m,day]=d.split("-"); return m+"/"+day+"/"+y; }
-      function catOpts(sel) {
-        return ["Office Supplies","Equipment","Materials","Maintenance","Utilities","Travel","Meals","Software","Other"]
-          .map(c => '<option value="'+c+'"'+(sel===c?" selected":"")+">"+c+"</option>").join("");
-      }
-      function propOpts(sel) {
-        return getPropertyList().map(p => '<option value="'+esc(p)+'"'+(sel===p?" selected":"")+">"+esc(p)+"</option>").join("");
-      }
-      function esc(s) { return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
-
-      function render() {
-        const rows = filtered();
-        const body = document.getElementById("tbl-body");
-        const empty = document.getElementById("tbl-empty");
-        if (!rows.length) { body.innerHTML=""; empty.style.display="block"; return; }
-        empty.style.display="none";
-        body.innerHTML = rows.map(e => {
-          const col = catColors[e.category] || {bg:"#F0EDE8",text:"#5a5550"};
-          const badge = e.category ? '<span class="badge" style="background:'+col.bg+';color:'+col.text+'">'+esc(e.category)+'</span>' : "";
-          const rcptNumDisplay = e.receiptNum ? '<span class="rcpt-num">'+esc(e.receiptNum)+'</span>' : '<span style="color:var(--text3)">—</span>';
-          if (editId === e.id) {
-            const cur = window._editReceipt !== undefined ? window._editReceipt : e.receipt;
-            return "<tr>"
-              +'<td class="edit-td"><div id="edit-rcpt-preview">'+thumbHTML(cur)+'</div>'
-              +'<div style="margin-top:6px;display:flex;flex-direction:column;gap:4px">'
-              +'<input type="file" accept="image/*,application/pdf" capture="environment" onchange="handleEditFile(this.files[0])" style="font-size:11px;padding:3px 0;border:none;box-shadow:none">'
-              +((e.receipt||window._editReceipt)?'<button onclick="clearEditReceipt()" class="btn btn-ghost btn-sm" style="font-size:10px;padding:3px 8px;color:var(--danger)">Remove</button>':"")
-              +"</div></td>"
-              +'<td class="edit-td"><input id="e-store-'+e.id+'" type="text" value="'+esc(e.store)+'"></td>'
-              +'<td class="edit-td"><input id="e-receiptnum-'+e.id+'" type="text" value="'+esc(e.receiptNum||"")+'" placeholder="Receipt #"></td>'
-              +'<td class="edit-td"><input id="e-date-'+e.id+'" type="date" value="'+e.date+'"></td>'
-              +'<td class="edit-td"><input id="e-amount-'+e.id+'" type="number" value="'+e.amount+'" step="0.01"></td>'
-              +'<td class="edit-td"><select id="e-category-'+e.id+'"><option value=""></option>'+catOpts(e.category)+"</select></td>"
-              +'<td class="edit-td"><select id="e-property-'+e.id+'"><option value="">— select —</option>'+propOpts(e.property||"")+"</select></td>"
-              +'<td class="edit-td"><textarea id="e-notes-'+e.id+'">'+esc(e.notes||"")+"</textarea></td>"
-              +'<td><div class="act-wrap"><button class="btn btn-primary btn-sm" onclick="saveEdit(\''+e.id+'\')">Save</button><button class="btn btn-ghost btn-sm" onclick="cancelEdit()">Cancel</button></div></td>'
-              +"</tr>";
-          }
-          return "<tr>"
-            +"<td>"+thumbHTML(e.receipt)+"</td>"
-            +'<td style="font-weight:500">'+esc(e.store)+"</td>"
-            +"<td>"+rcptNumDisplay+"</td>"
-            +'<td style="color:var(--text2);font-family:\'DM Mono\',monospace;font-size:12px">'+fmtDate(e.date)+"</td>"
-            +'<td style="font-weight:600;font-family:\'DM Mono\',monospace">$'+e.amount.toFixed(2)+"</td>"
-            +"<td>"+badge+"</td>"
-            +'<td style="color:var(--text2)">'+(esc(e.property)||"—")+"</td>"
-            +'<td style="color:var(--text2)">'+esc(e.notes||"")+"</td>"
-            +'<td><div class="act-wrap"><button class="btn btn-ghost btn-sm" onclick="startEdit(\''+e.id+'\')">Edit</button><button class="btn btn-danger btn-sm" onclick="deleteEntry(\''+e.id+'\')">Del</button></div></td>'
-            +"</tr>";
-        }).join("");
-      }
-
-      // ── EXPORT CSV ───────────────────────────────────────────────
-      function exportCSV() {
-        if (!entries.length) return;
-        const head = ["Store","Receipt #","Date","Amount","Category","Property","Notes","Receipt File"];
-        const rows = entries.map(e =>
-          [e.store, e.receiptNum||"", e.date, e.amount.toFixed(2), e.category||"", e.property||"", e.notes||"", e.receipt?e.receipt.name:""]
-            .map(v => '"'+(v||"").replace(/"/g,'""')+'"').join(",")
-        );
-        const a = document.createElement("a");
-        a.href = "data:text/csv;charset=utf-8,"+encodeURIComponent([head.join(","),...rows].join("\n"));
-        a.download = "purchases.csv";
-        a.click();
-      }
-
-      // ── TOAST / UTILS ────────────────────────────────────────────
-      function toast(msg) {
-        const t = document.getElementById("toast");
-        t.textContent = msg;
-        t.classList.add("show");
-        setTimeout(() => t.classList.remove("show"), 2800);
-      }
-      function todayStr() { return new Date().toISOString().split("T")[0]; }
-
-      // ── MODE TOGGLE ──────────────────────────────────────────────
-      let currentMode = "single";
-      function setMode(mode) {
-        currentMode = mode;
-        document.getElementById("single-form-wrap").style.display = mode==="single" ? "" : "none";
-        document.getElementById("multi-form-wrap").style.display = mode==="multi" ? "" : "none";
-        document.getElementById("mode-single").classList.toggle("mode-active", mode==="single");
-        document.getElementById("mode-multi").classList.toggle("mode-active", mode==="multi");
-        if (mode==="multi" && multiRows.length===0) multiAddRow();
-      }
-
-      // ── MULTI ENTRY ──────────────────────────────────────────────
-      let multiRows = [], multiRowIdSeq = 0;
-      function multiAddRow() {
-        const id = ++multiRowIdSeq;
-        multiRows.push({ id, receipt: null });
-        multiRenderRows();
-      }
-      function multiRemoveRow(id) {
-        if (multiRows.length===1) return;
-        multiRows = multiRows.filter(r => r.id!==id);
-        multiRenderRows();
-      }
-      function multiUpdateRowCount() {
-        const n = multiRows.length;
-        document.getElementById("multi-row-count").textContent = n+(n===1?" row":" rows");
-      }
-      function multiClearAll() { multiRows=[]; multiAddRow(); document.getElementById("multi-err").style.display="none"; }
-      function multiCatOpts() {
-        return ["","Office Supplies","Food","Equipment","Materials","Maintenance","Utilities","Travel","Meals","Software","Other"]
-          .map(c => `<option value="${esc(c)}">${c||"— select —"}</option>`).join("");
-      }
-      function multiPropOpts() {
-        return ["",...getPropertyList()].map(p => `<option value="${esc(p)}">${p||"— select property —"}</option>`).join("");
-      }
-      function multiRenderRows() {
-        const tbody = document.getElementById("multi-body");
-        tbody.innerHTML = multiRows.map(row => {
-          const rc = row.receipt;
-          const rcptHtml = rc
-            ? `<div class="multi-rcpt-zone has-file" title="${esc(rc.name)}"><input type="file" accept="image/*,application/pdf" onchange="multiHandleFile(${row.id}, this.files[0])">${rc.type&&rc.type.startsWith("image/") ? `<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>` : `<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`}</div><div class="multi-rcpt-label">${esc(rc.name)}</div>`
-            : `<div class="multi-rcpt-zone"><input type="file" accept="image/*,application/pdf" onchange="multiHandleFile(${row.id}, this.files[0])"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div><div class="multi-rcpt-label">Upload</div>`;
-          return `<tr class="multi-row" id="mrow-${row.id}">
-            <td class="multi-cell"><input type="text" placeholder="Store *" id="mr-store-${row.id}" list="store-datalist" autocomplete="off"></td>
-            <td class="multi-cell"><input type="text" placeholder="Receipt #" id="mr-rcptnum-${row.id}" autocomplete="off"></td>
-            <td class="multi-cell"><input type="date" id="mr-date-${row.id}" value="${todayStr()}"></td>
-            <td class="multi-cell"><input type="number" min="0" step="0.01" placeholder="0.00" id="mr-amount-${row.id}"></td>
-            <td class="multi-cell"><select id="mr-cat-${row.id}">${multiCatOpts()}</select></td>
-            <td class="multi-cell"><select id="mr-prop-${row.id}">${multiPropOpts()}</select></td>
-            <td class="multi-cell"><textarea placeholder="Notes" id="mr-notes-${row.id}"></textarea></td>
-            <td class="multi-cell"><div class="multi-rcpt-btn">${rcptHtml}</div></td>
-            <td><button class="multi-del-btn" onclick="multiRemoveRow(${row.id})" title="Remove row"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></td>
+      function renderCSVPreview() {
+        const tbody = document.getElementById("csv-preview-body");
+        const valid = csvParsedRows.filter(r => r.checked).length;
+        const total = csvParsedRows.length;
+        const errCnt = csvParsedRows.filter(r => r.errors.length > 0).length;
+        document.getElementById("csv-summary").textContent = total+" row"+(total===1?"":"s")+" found"+(errCnt?" · "+errCnt+" with errors":" · all valid");
+        document.getElementById("csv-import-btn").textContent = "Import "+valid+" Row"+(valid===1?"":"s");
+        tbody.innerHTML = csvParsedRows.map((row,idx) => {
+          const hasErr = row.errors.length > 0;
+          return `<tr style="${hasErr?"background:#fff8f7;":""}">
+            <td style="padding:7px 10px;text-align:center;"><input type="checkbox" ${row.checked?"checked":""} ${hasErr?"disabled":""} onchange="csvToggleRow(${idx},this.checked)" style="cursor:${hasErr?"not-allowed":"pointer"};width:14px;height:14px;"></td>
+            <td style="padding:7px 10px;font-weight:500;">${esc(row.store)||'<span style="color:var(--danger)">--</span>'}</td>
+            <td style="padding:7px 10px;color:var(--text2);">${esc(row.receiptNum)||"--"}</td>
+            <td style="padding:7px 10px;font-family:'DM Mono',monospace;font-size:11px;">${esc(row.date)||'<span style="color:var(--danger)">--</span>'}</td>
+            <td style="padding:7px 10px;font-family:'DM Mono',monospace;">${!isNaN(row.amount)&&!row.errors.some(e=>e.includes("amount"))?"$"+row.amount.toFixed(2):'<span style="color:var(--danger)">?</span>'}</td>
+            <td style="padding:7px 10px;">${esc(row.category)||"--"}</td>
+            <td style="padding:7px 10px;">${esc(row.property)||"--"}</td>
+            <td style="padding:7px 10px;color:var(--text2);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${esc(row.notes)}">${esc(row.notes)||"--"}</td>
+            <td style="padding:7px 10px;">${hasErr?`<span style="color:var(--danger);font-size:11px;">${row.errors.join(", ")}</span>`:'<span style="color:#2a7a4a;font-size:11px;">&#10003; Ready</span>'}</td>
           </tr>`;
         }).join("");
-        let dl = document.getElementById("store-datalist");
-        if (!dl) { dl=document.createElement("datalist"); dl.id="store-datalist"; document.body.appendChild(dl); }
-        dl.innerHTML = storeList.map(s => `<option value="${esc(s)}">`).join("");
-        multiUpdateRowCount();
-      }
-      async function multiHandleFile(rowId, file) {
-        if (!file) return;
-        const row = multiRows.find(r => r.id===rowId);
-        if (!row) return;
-        try {
-          const fd = new FormData();
-          fd.append("file", file);
-          const res = await fetch(R2_WORKER+"/upload", { method:"POST", body:fd });
-          const data = await res.json();
-          if (!res.ok || !data.key) throw new Error(data.error || "Upload failed");
-          row.receipt = { key: data.key, name: file.name, type: file.type };
-          multiRenderRows();
-          toast("Receipt uploaded ✓");
-        } catch(e) { toast("Upload failed: " + e.message); }
-      }
-      async function multiAddAll() {
-        const errEl = document.getElementById("multi-err");
-        errEl.style.display = "none";
-        let hasErr = false;
-        const toAdd = [];
-        for (const row of multiRows) {
-          const store = (document.getElementById("mr-store-"+row.id)?.value||"").trim();
-          const date = document.getElementById("mr-date-"+row.id)?.value||"";
-          const amt = parseFloat(document.getElementById("mr-amount-"+row.id)?.value);
-          const tr = document.getElementById("mrow-"+row.id);
-          if (!store||!date||isNaN(amt)||amt<0) { if (tr) tr.classList.add("row-error"); hasErr=true; }
-          else {
-            if (tr) tr.classList.remove("row-error");
-            toAdd.push({
-              store, date, amount: amt,
-              receiptNum: (document.getElementById("mr-rcptnum-"+row.id)?.value||"").trim(),
-              category: document.getElementById("mr-cat-"+row.id)?.value||"",
-              property: document.getElementById("mr-prop-"+row.id)?.value||"",
-              notes: (document.getElementById("mr-notes-"+row.id)?.value||"").trim(),
-              receipt: row.receipt||null,
-            });
-          }
-        }
-        if (hasErr) { errEl.textContent="Fix highlighted rows: Store, Date, and Amount are required."; errEl.style.display="block"; return; }
-        const btn = document.getElementById("multi-add-btn");
-        btn.disabled = true;
-        btn.textContent = "Saving…";
-        try {
-          for (const entry of toAdd) {
-            const newId = await insertToSupabase(entry);
-            entry.id = newId;
-            entries.unshift(entry);
-            addStoreToList(entry.store);
-          }
-          updateMetrics();
-          render();
-          const card = document.getElementById("multi-card");
-          btn.classList.add("success");
-          btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ${toAdd.length} Added!`;
-          card.classList.add("flash-success");
-          card.addEventListener("animationend", () => card.classList.remove("flash-success"), { once: true });
-          setTimeout(() => {
-            btn.classList.remove("success");
-            btn.disabled = false;
-            btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add All Purchases`;
-          }, 2000);
-          multiRows = [];
-          multiAddRow();
-        } catch(e) {
-          toast("Save failed: " + e.message);
-          btn.disabled = false;
-          btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add All Purchases`;
-        }
+        document.getElementById("csv-check-all").checked = csvParsedRows.filter(r=>!r.errors.length).every(r=>r.checked);
       }
 
-      // ── INIT ─────────────────────────────────────────────────────
-      async function init() {
-        await Promise.all([loadStores(), loadProperties()]);
-        populatePropertyDropdown();
-        await loadFromSupabase();
+      function csvToggleRow(idx, checked) { csvParsedRows[idx].checked = checked; renderCSVPreview(); }
+      function csvToggleAll(checked) { csvParsedRows.forEach(r => { if (!r.errors.length) r.checked = checked; }); renderCSVPreview(); }
+
+      function closeCSVModal() {
+        document.getElementById("csv-modal").classList.remove("open");
+        csvParsedRows = [];
+        document.getElementById("csv-preview-body").innerHTML = "";
+        document.getElementById("csv-import-err").style.display = "none";
+        document.getElementById("csv-import-input").value = "";
       }
+
+      async function confirmCSVImport() {
+        const toImport = csvParsedRows.filter(r => r.checked && r.errors.length === 0);
+        if (!toImport.length) { document.getElementById("csv-import-err").textContent="No valid rows selected."; document.getElementById("csv-import-err").style.display="block"; return; }
+        const btn = document.getElementById("csv-import-btn");
+        btn.disabled = true; btn.textContent = "Importing...";
+        document.getElementById("csv-import-err").style.display = "none";
+        let imported = 0, failed = 0;
+        for (const row of toImport) {
+          try {
+            const entry = { store:row.store, date:row.date, amount:row.amount, receiptNum:row.receiptNum, category:row.category, property:row.property, notes:row.notes, receipt:null };
+            const newId = await insertToSupabase(entry); entry.id = newId; entries.unshift(entry); addStoreToList(row.store); imported++;
+          } catch(e) { failed++; console.error("Row failed:", e.message); }
+        }
+        updateMetrics(); render(); closeCSVModal();
+        toast(imported+" purchase"+(imported===1?"":"s")+" imported"+(failed?" · "+failed+" failed":"")+" ✓");
+        btn.disabled = false; btn.textContent = "Import Selected";
+      }
+
+      function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2800);}
+      function todayStr(){return new Date().toISOString().split("T")[0];}
+
+      let currentMode="single";
+      function setMode(mode){currentMode=mode;document.getElementById("single-form-wrap").style.display=mode==="single"?"":"none";document.getElementById("multi-form-wrap").style.display=mode==="multi"?"":"none";document.getElementById("mode-single").classList.toggle("mode-active",mode==="single");document.getElementById("mode-multi").classList.toggle("mode-active",mode==="multi");if(mode==="multi"&&multiRows.length===0)multiAddRow();}
+
+      let multiRows=[],multiRowIdSeq=0;
+      function multiAddRow(){const id=++multiRowIdSeq;multiRows.push({id,receipt:null});multiRenderRows();}
+      function multiRemoveRow(id){if(multiRows.length===1)return;multiRows=multiRows.filter(r=>r.id!==id);multiRenderRows();}
+      function multiUpdateRowCount(){const n=multiRows.length;document.getElementById("multi-row-count").textContent=n+(n===1?" row":" rows");}
+      function multiClearAll(){multiRows=[];multiAddRow();document.getElementById("multi-err").style.display="none";}
+      function multiCatOpts(){return["","Office Supplies","Food","Equipment","Materials","Maintenance","Utilities","Travel","Meals","Software","Other"].map(c=>`<option value="${esc(c)}">${c||"-- select --"}</option>`).join("");}
+      function multiPropOpts(){return["",...getPropertyList()].map(p=>`<option value="${esc(p)}">${p||"-- select property --"}</option>`).join("");}
+      function multiRenderRows(){const tbody=document.getElementById("multi-body");tbody.innerHTML=multiRows.map(row=>{const rc=row.receipt;const rcptHtml=rc?`<div class="multi-rcpt-zone has-file" title="${esc(rc.name)}"><input type="file" accept="image/*,application/pdf" onchange="multiHandleFile(${row.id},this.files[0])">${rc.type&&rc.type.startsWith("image/")?`<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>`:`<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`}</div><div class="multi-rcpt-label">${esc(rc.name)}</div>`:`<div class="multi-rcpt-zone"><input type="file" accept="image/*,application/pdf" onchange="multiHandleFile(${row.id},this.files[0])"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div><div class="multi-rcpt-label">Upload</div>`;return `<tr class="multi-row" id="mrow-${row.id}"><td class="multi-cell"><input type="text" placeholder="Store *" id="mr-store-${row.id}" list="store-datalist" autocomplete="off"></td><td class="multi-cell"><input type="text" placeholder="Receipt #" id="mr-rcptnum-${row.id}" autocomplete="off"></td><td class="multi-cell"><input type="date" id="mr-date-${row.id}" value="${todayStr()}"></td><td class="multi-cell"><input type="number" min="0" step="0.01" placeholder="0.00" id="mr-amount-${row.id}"></td><td class="multi-cell"><select id="mr-cat-${row.id}">${multiCatOpts()}</select></td><td class="multi-cell"><select id="mr-prop-${row.id}">${multiPropOpts()}</select></td><td class="multi-cell"><textarea placeholder="Notes" id="mr-notes-${row.id}"></textarea></td><td class="multi-cell"><div class="multi-rcpt-btn">${rcptHtml}</div></td><td><button class="multi-del-btn" onclick="multiRemoveRow(${row.id})" title="Remove row"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></td></tr>`;}).join("");let dl=document.getElementById("store-datalist");if(!dl){dl=document.createElement("datalist");dl.id="store-datalist";document.body.appendChild(dl);}dl.innerHTML=storeList.map(s=>`<option value="${esc(s)}">`).join("");multiUpdateRowCount();}
+      async function multiHandleFile(rowId,file){if(!file)return;const row=multiRows.find(r=>r.id===rowId);if(!row)return;try{const fd=new FormData();fd.append("file",file);const res=await fetch(R2_WORKER+"/upload",{method:"POST",body:fd});const data=await res.json();if(!res.ok||!data.key)throw new Error(data.error||"Upload failed");row.receipt={key:data.key,name:file.name,type:file.type};multiRenderRows();toast("Receipt uploaded");}catch(e){toast("Upload failed: "+e.message);}}
+      async function multiAddAll(){const errEl=document.getElementById("multi-err");errEl.style.display="none";let hasErr=false;const toAdd=[];for(const row of multiRows){const store=(document.getElementById("mr-store-"+row.id)?.value||"").trim();const date=document.getElementById("mr-date-"+row.id)?.value||"";const amt=parseFloat(document.getElementById("mr-amount-"+row.id)?.value);const tr=document.getElementById("mrow-"+row.id);if(!store||!date||isNaN(amt)||amt<0){if(tr)tr.classList.add("row-error");hasErr=true;}else{if(tr)tr.classList.remove("row-error");toAdd.push({store,date,amount:amt,receiptNum:(document.getElementById("mr-rcptnum-"+row.id)?.value||"").trim(),category:document.getElementById("mr-cat-"+row.id)?.value||"",property:document.getElementById("mr-prop-"+row.id)?.value||"",notes:(document.getElementById("mr-notes-"+row.id)?.value||"").trim(),receipt:row.receipt||null});}}if(hasErr){errEl.textContent="Fix highlighted rows: Store, Date, and Amount are required.";errEl.style.display="block";return;}const btn=document.getElementById("multi-add-btn");btn.disabled=true;btn.textContent="Saving...";try{for(const entry of toAdd){const newId=await insertToSupabase(entry);entry.id=newId;entries.unshift(entry);addStoreToList(entry.store);}updateMetrics();render();const card=document.getElementById("multi-card");btn.classList.add("success");btn.innerHTML=`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ${toAdd.length} Added!`;card.classList.add("flash-success");card.addEventListener("animationend",()=>card.classList.remove("flash-success"),{once:true});setTimeout(()=>{btn.classList.remove("success");btn.disabled=false;btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add All Purchases';},2000);multiRows=[];multiAddRow();}catch(e){toast("Save failed: "+e.message);btn.disabled=false;btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add All Purchases';}}
+
+      async function init(){await Promise.all([loadStores(),loadProperties()]);populatePropertyDropdown();await loadFromSupabase();}
       init();
     </script>
   </body>
