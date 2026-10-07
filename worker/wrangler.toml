@@ -1,0 +1,17 @@
+# Receipt worker. Deploy from this folder: npx wrangler deploy
+# Secrets (set once, never committed): npx wrangler secret put ANTHROPIC_API_KEY / LINK_SECRET
+name = "wlgre-receipt-upload"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+SUPABASE_URL = "https://hoouyjfsavketbdeipcb.supabase.co"
+# The public anon key, same as in the web pages. It only identifies the project.
+SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhvb3V5amZzYXZrZXRiZGVpcGNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY1NzQwMDIsImV4cCI6MjA5MjE1MDAwMn0.mGcba3rJFNRyQrnFrcs-KOdMP3x_2yNhmYSBx6QFhmk"
+# Local testing: this Mac, plus its Wi-Fi and Tailscale addresses so an iPad or phone can test.
+ALLOWED_ORIGINS = "https://purchases.pages.dev,http://localhost:8765,http://127.0.0.1:8765,http://192.168.1.161:8765,http://100.109.174.36:8765"
+
+[[r2_buckets]]
+binding = "RECEIPTS"
+bucket_name = "wlgre-receipts"

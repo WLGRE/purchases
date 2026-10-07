@@ -1,6 +1,6 @@
 // Bump CACHE when the app shell changes so old caches are cleared.
-const CACHE = "purchases-v1";
-const SHELL = ["/", "/settings", "/manifest.webmanifest", "/icons/icon-192.png", "/icons/icon-512.png"];
+const CACHE = "purchases-v2";
+const SHELL = ["/", "/settings", "/auth.js", "/manifest.webmanifest", "/icons/icon-192.png", "/icons/icon-512.png"];
 
 self.addEventListener("install", (e) => {
   // Cache each file separately so one missing path can't block install.
